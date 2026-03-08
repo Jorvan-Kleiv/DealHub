@@ -1,2 +1,26 @@
+# Build
+bin/
+obj/
+
 # Visual Studio
 .vs/
+*.user
+*.suo
+
+# Configuration sensible (chaque dev gère le sien)
+appsettings.Development.json
+appsettings.Production.json
+
+# Node (Tailwind)
+node_modules/
+
+# Tailwind CSS compilé (généré automatiquement)
+wwwroot/css/output.css
+
+# Logs
+*.log
+logs/
+
+# Fichiers système
+.DS_Store
+Thumbs.db
