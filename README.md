@@ -17,13 +17,14 @@
 4. [Architecture](#-architecture)
 5. [Prérequis](#-prérequis)
 6. [Installation](#-installation)
-7. [Configuration](#-configuration)
-8. [Lancer le projet](#-lancer-le-projet)
-9. [Rôles utilisateurs](#-rôles-utilisateurs)
-10. [Travailler avec Git](#-travailler-avec-git)
-11. [Conventions de code](#-conventions-de-code)
-12. [Tâches en cours](#-tâches-en-cours)
-13. [Contributeurs](#-contributeurs)
+7. [Démarrage rapide](#-démarrage-rapide)
+8. [Configuration](#-configuration)
+9. [Lancer le projet](#-lancer-le-projet)
+10. [Rôles utilisateurs](#-rôles-utilisateurs)
+11. [Travailler avec Git](#-travailler-avec-git)
+12. [Conventions de code](#-conventions-de-code)
+13. [Tâches en cours](#-tâches-en-cours)
+14. [Contributeurs](#-contributeurs)
 
 ---
 
@@ -141,17 +142,64 @@ cd DealHub.Web
 npm install
 ```
 
-### 4. Compiler le CSS Tailwind
+### 4. Appliquer les migrations Entity Framework
+
+Dans la **Console du Gestionnaire de Packages** (Package Manager Console) de Visual Studio :
+
+```
+Update-Database
+```
+
+---
+
+## ⚡ Démarrage rapide
+
+> À effectuer **à chaque fois** que vous ouvrez le projet.
+
+### Terminal 1 — Tailwind (CSS en temps réel)
+
+Ouvrez un terminal dans le dossier `DealHub.Web` et lancez :
 
 ```
 npm run watch
 ```
 
-### 5. Appliquer les migrations Entity Framework
+Laissez ce terminal ouvert. Tailwind recompilera automatiquement le CSS à chaque modification.
+
+### Terminal 2 — Application .NET
+
+Ouvrez un second terminal dans le dossier `DealHub.Web` et lancez :
 
 ```
-cd DealHub.Web
-dotnet ef database update
+dotnet watch run
+```
+
+L'application sera disponible sur :
+- **HTTPS** : https://localhost:7051
+- **HTTP** : http://localhost:5051
+
+> ⚠️ Les deux terminaux doivent rester ouverts en même temps pendant le développement.
+
+### En cas de problème au démarrage
+
+**Certificat HTTPS invalide :**
+```
+dotnet dev-certs https --clean
+dotnet dev-certs https --trust
+```
+
+**Cache de build corrompu :**
+```
+dotnet clean
+dotnet restore
+dotnet watch run
+```
+
+**Erreur de migration :**
+Dans la PMC Visual Studio :
+```
+Drop-Database
+Update-Database
 ```
 
 ---
@@ -184,24 +232,17 @@ Créez votre fichier `DealHub.Web/appsettings.Development.json` avec vos valeurs
     "SenderEmail": "noreply@dealhub.fr",
     "SenderPassword": "VOTRE_MOT_DE_PASSE_APPLICATION"
   },
+  "AdminSeed": {
+    "Email": "VOTRE_EMAIL_ADMIN",
+    "Password": "VOTRE_MOT_DE_PASSE_ADMIN",
+    "FirstName": "Admin",
+    "LastName": "DealHub"
+  },
   "Serilog": {
     "MinimumLevel": "Debug"
   }
 }
 ```
-
----
-
-## ▶️ Lancer le projet
-
-```
-cd DealHub.Web
-dotnet watch run
-```
-
-L'application sera disponible sur :
-- **HTTPS** : https://localhost:7051
-- **HTTP** : http://localhost:5051
 
 ---
 
