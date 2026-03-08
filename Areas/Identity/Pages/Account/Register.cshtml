@@ -1,0 +1,91 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Créer un compte";
+}
+
+<div id="view-signup" class="animate-fade-in block">
+    <h1 class="font-title mb-1 text-xl font-medium tracking-tight text-gray-900 md:text-2xl">Créer un compte</h1>
+    <p class="mb-8 text-sm text-gray-500">Gratuit · Sans carte bancaire</p>
+    <div class="mb-6 grid grid-cols-1">
+        <button type="button" class="flex items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-50/80 hover:text-gray-900 focus:ring-2 focus:ring-gray-200 focus:ring-offset-1 focus:outline-none">
+            <iconify-icon icon="logos:google-icon" class="text-base"></iconify-icon>
+            Google
+        </button>
+    </div>
+    <div class="relative mb-6 flex items-center">
+        <div class="flex-grow border-t border-gray-100"></div>
+        <span class="mx-4 flex-shrink-0 text-xs font-medium tracking-wider text-gray-400 uppercase">ou</span>
+        <div class="flex-grow border-t border-gray-100"></div>
+    </div>
+    <form class="flex flex-col gap-4" method="post" id="account">
+        <div class="flex flex-col gap-1">
+            <div class="group relative">
+                <input type="text" id="first" asp-for="Input.FirstName" class="peer w-full rounded-xl border border-gray-200 bg-transparent px-3.5 pt-5 pr-10 pb-2 text-sm text-gray-900 placeholder-transparent transition-all outline-none hover:border-gray-300 focus:border-primary focus:ring-1 focus:ring-primary" placeholder="First name" required="">
+                <label asp-for="Input.FirstName" class="pointer-events-none absolute top-2 left-3.5 text-xs text-gray-400 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-gray-500">First name</label>
+                <div class="absolute top-3.5 right-3.5 text-gray-300 transition-colors peer-focus:text-green-500">
+                    <iconify-icon icon="solar:check-circle-linear" stroke-width="1.5" class="text-lg"></iconify-icon>
+                </div>
+            </div>
+            <span asp-validation-for="Input.FirstName"></span>
+        </div>
+        <div class="flex flex-col gap-1">
+            <div class="group relative">
+                <input type="text" asp-for="Input.LastName" id="last" class="peer w-full rounded-xl border border-gray-200 bg-transparent px-3.5 pt-5 pr-10 pb-2 text-sm text-gray-900 placeholder-transparent transition-all outline-none hover:border-gray-300 focus:border-primary focus:ring-1 focus:ring-primary" placeholder="Last name" required="">
+                <label asp-for="Input.LastName" class="pointer-events-none absolute top-2 left-3.5 text-xs text-gray-400 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-gray-500">Last name</label>
+                <div class="absolute top-3.5 right-3.5 text-gray-300 transition-colors peer-focus:text-green-500">
+                    <iconify-icon icon="solar:check-circle-linear" stroke-width="1.5" class="text-lg"></iconify-icon>
+                </div>
+            </div>
+            <span asp-validation-for="Input.LastName"></span>
+        </div>
+        <div class="flex flex-col gap-1">
+            <div class="group relative">
+                <input asp-for="Input.Email" type="text" id="email" class="peer w-full rounded-xl border border-gray-200 bg-transparent px-3.5 pt-5 pr-10 pb-2 text-sm text-gray-900 placeholder-transparent transition-all outline-none hover:border-gray-300 focus:border-primary focus:ring-1 focus:ring-primary" placeholder="Email" required="">
+                <label asp-for="Input.Email" class="pointer-events-none absolute top-2 left-3.5 text-xs text-gray-400 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-gray-500">Email</label>
+                <div class="absolute top-3.5 right-3.5 text-gray-300 transition-colors peer-focus:text-green-500">
+                    <iconify-icon icon="solar:check-circle-linear" stroke-width="1.5" class="text-lg"></iconify-icon>
+                </div>
+            </div>
+            <span asp-validation-for="Input.Email"></span>
+        </div>
+        <div class="flex flex-col gap-1">
+            <div class="relative">
+                <input asp-for="Input.Password" type="password" id="password" class="peer w-full rounded-xl border border-gray-200 bg-transparent px-3.5 pt-5 pr-10 pb-2 text-sm text-gray-900 placeholder-transparent transition-all outline-none hover:border-gray-300 focus:border-primary focus:ring-1 focus:ring-primary" placeholder="Mot de passe" required="">
+                <label asp-for="Input.Password" class="pointer-events-none absolute top-2 left-3.5 text-xs text-gray-400 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-gray-500">Mot de passe</label>
+            </div>
+            <span asp-validation-for="Input.Password"></span>
+        </div>
+        <div class="flex flex-col gap-1">
+            <div class="relative">
+                <input asp-for="Input.ConfirmPassword" type="password" id="password" class="peer w-full rounded-xl border border-gray-200 bg-transparent px-3.5 pt-5 pr-10 pb-2 text-sm text-gray-900 placeholder-transparent transition-all outline-none hover:border-gray-300 focus:border-primary focus:ring-1 focus:ring-primary" placeholder="Confirmation mdp" required="">
+                <label asp-for="Input.ConfirmPassword" class="pointer-events-none absolute top-2 left-3.5 text-xs text-gray-400 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs peer-focus:text-gray-500">Confirmation mdp</label>
+            </div>
+            <span asp-validation-for="Input.ConfirmPassword"></span>
+        </div>
+
+        <div class="flex items-start gap-3 pt-2">
+            <div class="relative mt-0.5 flex items-center">
+                <input type="checkbox" id="cgu" class="peer h-4 w-4 shrink-0 cursor-pointer appearance-none rounded-[4px] border border-gray-300 bg-white transition-all checked:border-primary checked:bg-primary focus:ring-2 focus:ring-primary focus:ring-offset-1 focus:outline-none" required="">
+                <iconify-icon icon="solar:check-read-linear" stroke-width="1.5" class="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-xs text-white opacity-0 peer-checked:opacity-100"></iconify-icon>
+            </div>
+            <label for="cgu" class="cursor-pointer text-xs leading-relaxed text-gray-500 select-none">
+                J'accepte les <a href="#" class="font-medium text-gray-900 transition-colors hover:text-primary">Conditions d'Utilisation</a> et la <a href="#" class="font-medium text-gray-900 transition-colors hover:text-primary">Politique de confidentialité</a>.
+            </label>
+        </div>
+
+        <div class="pt-3">
+            <button type="submit" class="w-full rounded-xl bg-primary px-4 py-3 text-sm font-medium text-white shadow-sm transition-all hover:bg-[#e63e00] focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:outline-none active:scale-[0.98]">
+                Créer mon compte
+            </button>
+        </div>
+    </form>
+
+    <p class="mt-8 text-center text-sm text-gray-500">
+        Déjà un compte ? <a href="/Identity/Account/Login" class="font-medium text-gray-900 transition-colors hover:text-primary">Se connecter</a>
+    </p>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

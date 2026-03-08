@@ -1,0 +1,164 @@
+﻿<html lang="fr" class="antialiased">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["title"] - DealHub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link rel="stylesheet" href="~/css/output.css" />
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+</head>
+<body class="bg-background font-sans text-sm font-normal text-zinc-900 selection:bg-primary-100 selection:text-primary-600">
+    <div class="flex h-screen overflow-hidden">
+        <aside class="z-20 hidden w-64 shrink-0 flex-col border-r border-zinc-900 bg-zinc-950 text-zinc-400 lg:flex">
+            <div class="flex h-16 items-center border-b border-zinc-800/50 px-6">
+                <a href="#" class="font-display text-lg font-semibold tracking-tighter text-white">
+                    DEALHUB
+                </a>
+            </div>
+            <div class="hide-scrollbar flex-1 space-y-8 overflow-y-auto px-4 py-6">
+                <nav class="space-y-1">
+                    <p class="mb-3 px-2 text-xs font-medium tracking-widest text-zinc-500 uppercase">Menu principal</p>
+                    <a href="#" class="hoverbg-primary/5 relative flex items-center gap-2 rounded-lg bg-primary/10 px-2 py-2 text-white transition-colors">
+                        <iconify-icon icon="solar:widget-5-linear" stroke-width="1.5" class="text-lg text-primary"></iconify-icon>
+                        <span class="font-medium text-primary hover:text-primary">Vue d'ensemble</span>
+                    </a>
+                    <a href="#" class="group flex items-center gap-2 rounded-lg px-2 py-2 transition-colors hover:bg-zinc-900 hover:text-white">
+                        <iconify-icon icon="solar:tag-linear" stroke-width="1.5" class="text-lg group-hover:text-zinc-200"></iconify-icon>
+                        <span>Mes deals</span>
+                        <span class="ml-auto rounded-md bg-zinc-800 px-2 py-0.5 text-xs text-zinc-300">42</span>
+                    </a>
+                    <a href="#" class="group flex items-center gap-2 rounded-lg px-2 py-2 transition-colors hover:bg-zinc-900 hover:text-white">
+                        <iconify-icon icon="solar:heart-linear" stroke-width="1.5" class="text-lg group-hover:text-zinc-200"></iconify-icon>
+                        <span>Favoris</span>
+                    </a>
+                    <a href="#" class="group flex items-center gap-2 rounded-lg px-2 py-2 transition-colors hover:bg-zinc-900 hover:text-white">
+                        <iconify-icon icon="solar:bell-bing-linear" stroke-width="1.5" class="text-lg group-hover:text-zinc-200"></iconify-icon>
+                        <span>Alertes</span>
+                        <span class="ml-auto h-2 w-2 rounded-full bg-primary"></span>
+                    </a>
+                </nav>
+                <nav class="space-y-1">
+                    <p class="mb-3 px-2 text-xs font-medium tracking-widest text-zinc-500 uppercase">Administration</p>
+                    <a href="#" class="group flex items-center gap-2 rounded-lg px-2 py-2 transition-colors hover:bg-zinc-900 hover:text-white">
+                        <iconify-icon icon="solar:flag-2-linear" stroke-width="1.5" class="text-lg group-hover:text-zinc-200"></iconify-icon>
+                        <span>Signalements</span>
+                        <span class="ml-auto rounded-md bg-zinc-800 px-2 py-0.5 text-xs text-zinc-300">16</span>
+                    </a>
+                    <a href="#" class="group flex items-center gap-2 rounded-lg px-2 py-2 transition-colors hover:bg-zinc-900 hover:text-white">
+                        <iconify-icon icon="solar:shop-linear" stroke-width="1.5" class="text-lg group-hover:text-zinc-200"></iconify-icon>
+                        <span>Merchant</span>
+                    </a>
+                </nav>
+
+                <nav class="space-y-1">
+                    <p class="mb-3 px-2 text-xs font-medium tracking-widest text-zinc-500 uppercase">Compte</p>
+                    <a href="#" class="group flex items-center gap-2 rounded-lg px-2 py-2 transition-colors hover:bg-zinc-900 hover:text-white">
+                        <iconify-icon icon="solar:settings-linear" stroke-width="1.5" class="text-lg group-hover:text-zinc-200"></iconify-icon>
+                        <span>Paramètres</span>
+                    </a>
+                </nav>
+            </div>
+            <!-- User Mini Profile -->
+            <div class="border-t border-zinc-800/50 p-4">
+                <div class="flex cursor-pointer items-center gap-3 rounded-lg px-2 py-2 transition-colors hover:bg-zinc-900">
+                    <div class="text-primary-500 font-syne flex h-8 w-8 items-center justify-center rounded-full border border-primary/20 bg-primary/10 text-sm font-medium">
+                        JK
+                    </div>
+                    <div class="min-w-0 flex-1">
+                        <p class="truncate text-sm font-medium text-white">Jorvan Kleiv</p>
+                        <p class="truncate text-xs text-zinc-500">Expert 🏆</p>
+                    </div>
+                    <iconify-icon icon="solar:alt-arrow-up-linear" class="text-zinc-500"></iconify-icon>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Wrapper -->
+        <main class="flex min-w-0 flex-1 flex-col bg-background">
+            <!-- Header -->
+            <header class="sticky top-0 z-40 flex h-16 shrink-0 items-center justify-between border-b border-black/5 bg-white px-4 backdrop-blur-xl transition-colors duration-200 lg:px-8">
+                <!-- Left: Logo & Breadcrumb -->
+                <div class="flex items-center gap-4">
+                    <button class="rounded-md p-1.5 text-[#171717] transition-colors hover:bg-black/5 md:hidden">
+                        <iconify-icon icon="solar:hamburger-menu-linear" stroke-width="1.5" class="text-xl"></iconify-icon>
+                    </button>
+                    <div class="hidden items-center gap-2 text-xs text-[#737373] md:flex">
+                        <span class="cursor-pointer transition-colors hover:text-[#171717]">Espace membre</span>
+                        <span class="text-[#D4D4D8]">/</span>
+                        <span id="breadcrumb-current" class="font-medium text-[#171717]">Tableau de bord</span>
+                    </div>
+                </div>
+
+                <!-- Right: Actions & Dropdown -->
+                <div class="flex items-center gap-1 sm:gap-2">
+                    <button class="flex h-9 w-9 items-center justify-center rounded-lg text-[#737373] transition-colors hover:bg-black/[0.04] hover:text-[#171717]">
+                        <iconify-icon icon="solar:magnifer-linear" stroke-width="1.5" class="text-lg"></iconify-icon>
+                    </button>
+                    <button class="relative flex h-9 w-9 items-center justify-center rounded-lg text-[#737373] transition-colors hover:bg-black/[0.04] hover:text-[#171717]">
+                        <iconify-icon icon="solar:bell-linear" stroke-width="1.5" class="text-lg"></iconify-icon>
+                        <span class="absolute top-2 right-2 h-1.5 w-1.5 rounded-full bg-primary ring-2 ring-white"></span>
+                    </button>
+
+                    <div class="mx-1 h-4 w-px bg-black/10 sm:mx-2"></div>
+
+                    <!-- User Menu -->
+                    <div class="relative">
+                        <button id="user-menu-btn" onclick="toggleDropdown(event)" class="ml-1 flex items-center gap-2 rounded-full border border-black/5 p-1 pr-2 transition-colors hover:border-black/10 hover:bg-black/[0.02] focus:outline-none">
+                            <div class="flex h-7 w-7 items-center justify-center rounded-full bg-gradient-to-tr from-[#FF4500] to-[#FF8A65] font-semibold tracking-tight text-white text-[10px] shadow-inner">JD</div>
+                            <iconify-icon icon="solar:alt-arrow-down-linear" stroke-width="1.5" class="pointer-events-none text-sm text-[#737373]"></iconify-icon>
+                        </button>
+
+                        <!-- Dropdown Menu -->
+                        <div id="user-dropdown" class="absolute top-full right-0 z-50 mt-2 hidden w-56 origin-top-right transform rounded-xl border border-black/[0.04] bg-white py-1.5 shadow-[0_12px_32px_rgba(0,0,0,0.08)] transition-all duration-200">
+                            <div class="mb-1 px-4 py-2">
+                                <p class="text-xs font-semibold tracking-tight text-[#171717]">Jean Dupont</p>
+                                <p class="mt-0.5 truncate text-xs text-[#737373]">jean.dupont@email.com</p>
+                            </div>
+                            <div class="my-1 h-px bg-black/5"></div>
+                            <a href="#" class="flex w-full items-center gap-2.5 px-4 py-2 text-xs font-medium text-[#525252] transition-colors hover:bg-black/[0.03] hover:text-[#171717]">
+                                <iconify-icon icon="solar:heart-linear" stroke-width="1.5" class="text-base"></iconify-icon> Mes favoris
+                            </a>
+                            <div class="my-1 h-px bg-black/5"></div>
+                            <a href="#" class="flex w-full items-center justify-between px-4 py-2 text-xs font-medium text-[#525252] transition-colors hover:bg-black/[0.03] hover:text-[#171717]">
+                                <span class="pointer-events-none flex items-center gap-2.5">
+                                    <iconify-icon icon="solar:moon-linear" stroke-width="1.5" class="text-base"></iconify-icon> Mode sombre
+                                </span>
+                                <div class="pointer-events-none relative h-4 w-7 rounded-full bg-[#E5E7EB] shadow-inner transition-colors">
+                                    <div class="absolute top-[2px] left-[2px] h-3 w-3 translate-x-0 rounded-full bg-white shadow-sm transition-transform"></div>
+                                </div>
+                            </a>
+                            <div class="my-1 h-px bg-black/5"></div>
+                            <button class="flex w-full items-center gap-2.5 px-4 py-2 text-xs font-medium text-[#EF4444] transition-colors hover:bg-[#EF4444]/5">
+                                <iconify-icon icon="solar:logout-2-linear" stroke-width="1.5" class="text-base"></iconify-icon> Déconnexion
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            @RenderBody()
+        </main>
+    </div>
+    <nav class="pb-safe fixed right-0 bottom-0 left-0 z-50 flex h-16 items-center justify-around border-t border-zinc-200 bg-white/90 shadow-[0_-4px_12px_rgba(0,0,0,0.02)] backdrop-blur-md lg:hidden">
+        <a href="#" class="flex h-full w-16 flex-col items-center justify-center gap-1 text-zinc-400 transition-colors hover:text-zinc-900">
+            <iconify-icon icon="solar:home-smile-linear" class="text-2xl"></iconify-icon>
+            <span class="font-medium text-[10px]">Accueil</span>
+        </a>
+        <a href="#" class="relative flex h-full w-16 flex-col items-center justify-center gap-1 text-zinc-400 transition-colors hover:text-zinc-900">
+            <iconify-icon icon="solar:tag-linear" class="text-2xl"></iconify-icon>
+            <span class="font-medium text-[10px]">Deals</span>
+        </a>
+        <a href="#" class="relative flex h-full w-16 flex-col items-center justify-center gap-1 text-zinc-400 transition-colors hover:text-zinc-900">
+            <iconify-icon icon="solar:bell-linear" class="text-2xl"></iconify-icon>
+            <span class="font-medium text-[10px]">Alertes</span>
+            <span class="bg-primary-500 absolute top-2 right-4 h-2 w-2 rounded-full ring-2 ring-white"></span>
+        </a>
+        <a href="#" class="text-primary-600 flex h-full w-16 flex-col items-center justify-center gap-1 transition-colors">
+            <iconify-icon icon="solar:user-circle-bold" class="text-2xl"></iconify-icon>
+            <span class="font-medium text-[10px]">Profil</span>
+        </a>
+    </nav>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

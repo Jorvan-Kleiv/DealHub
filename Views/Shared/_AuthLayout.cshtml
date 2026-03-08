@@ -1,0 +1,74 @@
+﻿<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["title"] - DealHub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link rel="stylesheet" href="~/css/output.css" />
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <style>
+        
+    </style>
+</head>
+<body class="flex min-h-screen text-sm antialiased selection:bg-primary/20 selection:text-primary">
+    <div class="relative hidden w-[45%] flex-col justify-between overflow-hidden border-r border-gray-900 bg-[#12121a] p-12 text-white lg:flex">
+        <div class="pointer-events-none absolute top-[-20%] left-[-10%] h-[40rem] w-[40rem] rounded-full bg-primary opacity-10 mix-blend-screen blur-[140px] filter"></div>
+        <div class="pointer-events-none absolute right-[-10%] bottom-[-20%] h-[30rem] w-[30rem] rounded-full bg-indigo-500 opacity-10 mix-blend-screen blur-[120px] filter"></div>
+        <div class="relative z-10 flex items-center gap-2.5">
+            <div class="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-orange-500 shadow-sm">
+                <iconify-icon icon="solar:tag-linear" class="text-lg text-white" stroke-width="1.5"></iconify-icon>
+            </div>
+            <span class="font-display text-xl font-medium tracking-tight text-white/90 uppercase">DealHub</span>
+        </div>
+        <div class="relative z-10 max-w-sm space-y-8">
+            <h2 class="font-display text-2xl leading-snug font-medium tracking-tight text-white/95 md:text-3xl">
+                Rejoignez la plus grande communauté de chasseurs de bons plans.
+            </h2>
+            <div class="flex items-center gap-4 rounded-2xl border border-white/[0.05] bg-white/[0.03] p-4 text-xs text-gray-400 backdrop-blur-md">
+                <div class="flex -space-x-2.5">
+                    <img class="h-7 w-7 rounded-full border border-[#12121a] object-cover" src="https://i.pravatar.cc/100?img=1" alt="Avatar">
+                    <img class="h-7 w-7 rounded-full border border-[#12121a] object-cover" src="https://i.pravatar.cc/100?img=2" alt="Avatar">
+                    <img class="h-7 w-7 rounded-full border border-[#12121a] object-cover" src="https://i.pravatar.cc/100?img=3" alt="Avatar">
+                    <div class="flex h-7 w-7 items-center justify-center rounded-full border border-[#12121a] bg-gray-800 font-medium text-white/70">+</div>
+                </div>
+                <div class="flex flex-col gap-0.5">
+                    <span class="font-medium text-white/90">128 450 membres</span>
+                    <span>🔥 2 847 deals actifs aujourd'hui</span>
+                </div>
+            </div>
+        </div>
+        <div class="animate-float absolute right-12 bottom-32 z-20 w-72 rounded-2xl border border-white/[0.08] bg-white/[0.02] p-5 shadow-2xl backdrop-blur-xl">
+            <div class="mb-3 flex items-center gap-3">
+                <div class="h-8 w-8 rounded-full bg-gradient-to-tr from-indigo-400 to-primary opacity-80"></div>
+                <div>
+                    <p class="text-xs font-medium text-white/90">Jorvan K.</p>
+                    <p class="text-xs text-gray-500">Membre depuis 2023</p>
+                </div>
+            </div>
+            <p class="text-xs leading-relaxed text-gray-400">
+                "Grâce aux alertes DealHub, j'ai économisé plus de 400€ sur mon setup bureautique le mois dernier. Incroyable !"
+            </p>
+        </div>
+        <div class="relative z-10 text-xs text-gray-600">
+            © 2026 DealHub. Tous droits réservés.
+        </div>
+    </div>
+
+    <!-- Right Panel (Forms) -->
+    <div class="relative flex min-h-screen w-full items-center justify-center overflow-y-auto bg-white px-6 sm:px-12 sm:py-4 lg:w-[55%] lg:px-16 lg:py-6">
+        <div class="w-full max-w-[380px] self-start">
+            <!-- Mobile Logo -->
+            <div class="flex min-h-full items-center gap-2 lg:hidden">
+                <div class="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-orange-500">
+                    <iconify-icon icon="solar:tag-linear" class="text-sm text-white" stroke-width="1.5"></iconify-icon>
+                </div>
+                <span class="font-display text-lg font-medium tracking-tight text-gray-900 uppercase">DealHub</span>
+            </div>
+            @RenderBody()
+        </div>
+    </div>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
