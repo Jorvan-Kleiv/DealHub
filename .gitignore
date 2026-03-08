@@ -7,20 +7,20 @@ obj/
 *.user
 *.suo
 
-# Configuration sensible (chaque dev gÃ¨re le sien)
+# Configuration sensible (chaque dev gère le sien)
 appsettings.Development.json
 appsettings.Production.json
 
 # Node (Tailwind)
 node_modules/
 
-# Tailwind CSS compilÃ© (gÃ©nÃ©rÃ© automatiquement)
+# Tailwind CSS compilé (généré automatiquement)
 wwwroot/css/output.css
 
 # Logs
 *.log
 logs/
 
-# Fichiers systÃ¨me
+# Fichiers système
 .DS_Store
 Thumbs.db
