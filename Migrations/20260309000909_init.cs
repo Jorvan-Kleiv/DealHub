@@ -85,6 +85,22 @@ namespace DealHub.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Report",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ReasonPhrase = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ReportStatusEnum = table.Column<int>(type: "int", nullable: false),
+                    ReportedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ResolvedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Report", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -213,6 +229,33 @@ namespace DealHub.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "VerificationDemand",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    EnterpriseName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Siret = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    WebsiteUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SubmitAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ResolvedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    RefuseReason = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AdminSolverFullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_VerificationDemand", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_VerificationDemand_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Deal",
                 columns: table => new
                 {
@@ -311,6 +354,12 @@ namespace DealHub.Migrations
                 name: "IX_Deal_UserId",
                 table: "Deal",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_VerificationDemand_UserId",
+                table: "VerificationDemand",
+                column: "UserId",
+                unique: true);
         }
 
         /// <inheritdoc />
@@ -338,16 +387,22 @@ namespace DealHub.Migrations
                 name: "Deal");
 
             migrationBuilder.DropTable(
-                name: "AspNetRoles");
+                name: "Report");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "VerificationDemand");
+
+            migrationBuilder.DropTable(
+                name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "Category");
 
             migrationBuilder.DropTable(
                 name: "Merchant");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
         }
     }
 }

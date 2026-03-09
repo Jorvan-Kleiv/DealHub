@@ -7,7 +7,11 @@ namespace DealHub.Data
 {
     public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options): IdentityDbContext<ApplicationUser>(options)
     {
-        public DbSet<DealHub.Models.Deal> Deal { get; set; } = default!;
-        public DbSet<DealHub.Models.Category> Category { get; set; } = default!;
+        public DbSet<Deal> Deal { get; set; } = default!;
+        public DbSet<Category> Category { get; set; } = default!;
+        public DbSet<VerificationDemand> VerificationDemand { get; set; } = default!;
+        public DbSet<DealHub.Models.Report> Report { get; set; } = default!;
+
+        
     }
 }

@@ -1,4 +1,3 @@
-wwwroot\css\output.css
 wwwroot\css\site.css
 wwwroot\css\site.output.css
 wwwroot\favicon.ico
@@ -69,25 +68,16 @@ wwwroot\lib\jquery\dist\jquery.slim.js
 wwwroot\lib\jquery\dist\jquery.slim.min.js
 wwwroot\lib\jquery\dist\jquery.slim.min.map
 wwwroot\lib\jquery\LICENSE.txt
-<<<<<<< HEAD
-=======
+wwwroot\css\output.css
 C:\Users\CBT\source\repos\DealHub\wwwroot\css\site.css
+C:\Users\CBT\source\repos\DealHub\wwwroot\css\site.output.css
 C:\Users\CBT\source\repos\DealHub\wwwroot\favicon.ico
 C:\Users\CBT\source\repos\DealHub\wwwroot\js\site.js
 C:\Users\CBT\source\repos\DealHub\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css
 C:\Users\CBT\source\repos\DealHub\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map
 C:\Users\CBT\source\repos\DealHub\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css
->>>>>>> 923c9707c9d2bd276608fea99da776b62798ebd6
 C:\Users\CBT\source\repos\DealHub\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css.map
 C:\Users\CBT\source\repos\DealHub\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.css
-C:\Users\CBT\source\repos\DealHub\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css
-C:\Users\CBT\source\repos\DealHub\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map
-C:\Users\CBT\source\repos\DealHub\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css
-C:\Users\CBT\source\repos\DealHub\wwwroot\js\site.js
-C:\Users\CBT\source\repos\DealHub\wwwroot\favicon.ico
-C:\Users\CBT\source\repos\DealHub\wwwroot\css\site.output.css
-C:\Users\CBT\source\repos\DealHub\wwwroot\css\site.css
-C:\Users\CBT\source\repos\DealHub\wwwroot\css\output.css
 C:\Users\CBT\source\repos\DealHub\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.css.map
 C:\Users\CBT\source\repos\DealHub\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.min.css
 C:\Users\CBT\source\repos\DealHub\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.min.css.map
@@ -148,8 +138,4 @@ C:\Users\CBT\source\repos\DealHub\wwwroot\lib\jquery\dist\jquery.slim.js
 C:\Users\CBT\source\repos\DealHub\wwwroot\lib\jquery\dist\jquery.slim.min.js
 C:\Users\CBT\source\repos\DealHub\wwwroot\lib\jquery\dist\jquery.slim.min.map
 C:\Users\CBT\source\repos\DealHub\wwwroot\lib\jquery\LICENSE.txt
-<<<<<<< HEAD
-=======
 C:\Users\CBT\source\repos\DealHub\wwwroot\css\output.css
-C:\Users\CBT\source\repos\DealHub\wwwroot\css\site.output.css
->>>>>>> 923c9707c9d2bd276608fea99da776b62798ebd6
