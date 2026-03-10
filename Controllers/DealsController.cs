@@ -52,34 +52,38 @@ namespace DealHub.Controllers
         }
 
         // GET: Deals/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewData["CategoryId"] = new SelectList(_context.Set<Category>(), "Id", "Id");
-            ViewData["MerchantId"] = new SelectList(_context.Set<Merchant>(), "Id", "Id");
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
-            return View();
+
+            var model = new DealRequest
+            {
+                Categories = await _context.Set<Category>().Where(c => c.IsActive).ToListAsync(),
+                Merchants = await _context.Set<Merchant>().ToListAsync(),
+                Deal = new Deal()
+            };
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize] // ← ajoute ça si pas déjà sur le contrôleur
-        public async Task<IActionResult> Create(Deal deal)
+        public async Task<IActionResult> Create(DealRequest request)
         {
             var userId = _userManager.GetUserId(User);
             if (userId is null) return RedirectToAction("Login", "Account");
 
             if (ModelState.IsValid)
             {
-                deal.UserId = userId;
-                deal.CreatedAt = DateTime.Now;
-                _context.Add(deal);
+                request.Deal.UserId = userId;
+                request.Deal.CreatedAt = DateTime.Now;
+                _context.Add(request.Deal);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewData["CategoryId"] = new SelectList(_context.Set<Category>(), "Id", "Name", deal.CategoryId);
-            ViewData["MerchantId"] = new SelectList(_context.Set<Merchant>(), "Id", "Name", deal.MerchantId);
-            return View(deal);
+            ViewData["CategoryId"] = new SelectList(_context.Set<Category>(), "Id", "Name", request.Deal.CategoryId);
+            ViewData["MerchantId"] = new SelectList(_context.Set<Merchant>(), "Id", "Name", request.Deal.MerchantId);
+            return View(request.Deal);
         }
 
         // GET: Deals/Edit/5
