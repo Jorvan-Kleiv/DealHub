@@ -27,6 +27,7 @@ namespace DealHub.Models
         public double FinalPrice { get; set; }
         [Display(Name = "Score de vote")]
         public int VoteScore { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
         [ValidateNever]
         public ApplicationUser User { get; set; }
         public string UserId { get; set; }

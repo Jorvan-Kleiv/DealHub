@@ -20,31 +20,6 @@ function markNotifsRead() {
     document.getElementById('notif1').classList.add('opacity-60');
     setTimeout(() => { notifPanel.classList.add('hidden'); }, 300);
 }
-function toggleDropdown(event) {
-    event.stopPropagation();
-    const dropdown = document.getElementById('user-dropdown');
-    dropdown.classList.toggle('hidden');
-}
-(function () {
-    const btn = document.getElementById("btnToggleNotif");
-    const panel = document.getElementById("notifPanel");
-    if (!btn || !panel) return;
-
-    btn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        panel.classList.toggle("hidden");
-    });
-
-    document.addEventListener("click", (e) => {
-        if (!panel.contains(e.target) && e.target !== btn)
-            panel.classList.add("hidden");
-    });
-})();
-
-function markNotifsRead() {
-    document.querySelectorAll("[id^='notif']").forEach(n => n.classList.add("opacity-60"));
-    document.querySelector("#btnToggleNotif span")?.remove();
-}
 
 window.addEventListener('click', function (event) {
     const dropdown = document.getElementById('user-dropdown');
@@ -53,26 +28,6 @@ window.addEventListener('click', function (event) {
         dropdown.classList.add('hidden');
     }
 });
-const pages = {
-    overview: { id: 'page-overview', title: "Vue d'ensemble" },
-    users: { id: 'page-users', title: "Utilisateurs" },
-    deals: { id: 'page-deals', title: "Deals" },
-    marchands: { id: 'page-marchands', title: "Marchands" },
-    moderation: { id: 'page-moderation', title: "Modération" },
-    stats: { id: 'page-stats', title: "Statistiques" },
-    config: { id: 'page-config', title: "Configuration" },
-};
-
-function navigate(key) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-    document.getElementById(pages[key].id).classList.add('active');
-    document.getElementById('topbar-title').textContent = pages[key].title;
-    document.querySelectorAll('.nav-item').forEach(n => {
-        if (n.getAttribute('onclick')?.includes(`'${key}'`)) n.classList.add('active');
-    });
-    if (window.innerWidth < 768) closeMobile();
-}
 
 function toggleSidebar() {
     const sb = document.getElementById('sidebar');

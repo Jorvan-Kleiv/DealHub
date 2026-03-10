@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DealHub.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260309000909_init")]
+    [Migration("20260310121956_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -66,6 +66,9 @@ namespace DealHub.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -76,6 +79,9 @@ namespace DealHub.Migrations
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsBanned")
+                        .HasColumnType("bit");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -152,6 +158,57 @@ namespace DealHub.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Category");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Accessoires high-tech",
+                            IsActive = true,
+                            Name = "High-Tech"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Console et autres",
+                            IsActive = true,
+                            Name = "Jeux Vidéo"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Mode",
+                            IsActive = true,
+                            Name = "Mode"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Description = "Produits de maison",
+                            IsActive = true,
+                            Name = "Maison"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Description = "Décoration",
+                            IsActive = true,
+                            Name = "Deco"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Description = "Produit de consommation",
+                            IsActive = true,
+                            Name = "Alimentaire"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Description = "Voyage a prix reduis",
+                            IsActive = true,
+                            Name = "Voyages"
+                        });
                 });
 
             modelBuilder.Entity("DealHub.Models.Deal", b =>
@@ -164,6 +221,9 @@ namespace DealHub.Migrations
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .IsRequired()

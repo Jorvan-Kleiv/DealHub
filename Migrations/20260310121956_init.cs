@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace DealHub.Migrations
 {
     /// <inheritdoc />
@@ -32,6 +34,8 @@ namespace DealHub.Migrations
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsBanned = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Reputation = table.Column<int>(type: "int", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -269,6 +273,7 @@ namespace DealHub.Migrations
                     OriginalPrice = table.Column<double>(type: "float", nullable: false),
                     FinalPrice = table.Column<double>(type: "float", nullable: false),
                     VoteScore = table.Column<int>(type: "int", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false),
                     MerchantId = table.Column<int>(type: "int", nullable: false)
@@ -294,6 +299,20 @@ namespace DealHub.Migrations
                         principalTable: "Merchant",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Category",
+                columns: new[] { "Id", "Description", "IsActive", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Accessoires high-tech", true, "High-Tech" },
+                    { 2, "Console et autres", true, "Jeux Vidéo" },
+                    { 3, "Mode", true, "Mode" },
+                    { 4, "Produits de maison", true, "Maison" },
+                    { 5, "Décoration", true, "Deco" },
+                    { 6, "Produit de consommation", true, "Alimentaire" },
+                    { 7, "Voyage a prix reduis", true, "Voyages" }
                 });
 
             migrationBuilder.CreateIndex(

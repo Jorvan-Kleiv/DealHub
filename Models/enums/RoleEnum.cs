@@ -5,6 +5,6 @@
         USER,
         MODERATOR,
         MERCHANT,
-        ADMIN,
+        ADMIN 
     }
 }

@@ -13,6 +13,9 @@ namespace DealHub.Models
         public string FirstName { get; set; } = string.Empty;
         [PersonalData]
         public string LastName { get; set; } = string.Empty;
+        [PersonalData]
+        public bool IsBanned { get; set; } = false;
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         [NotMapped]
         public IList<string> RoleNames { get; set; } = null;
         public int Reputation {  get; set; } = 0;

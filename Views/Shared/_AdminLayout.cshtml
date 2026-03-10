@@ -13,7 +13,6 @@
 <body class="flex h-screen overflow-hidden bg-canvas font-sans text-ink text-[13px]">
     <div id="mob-overlay" onclick="closeMobile()"></div>
     <aside id="sidebar" class="flex shrink-0 flex-col overflow-hidden border-r border-dark-border bg-dark">
-        <!-- Logo -->
         <div class="flex h-[52px] shrink-0 items-center gap-2 overflow-hidden border-b border-dark-border px-3">
             <div class="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-brand">
                 <iconify-icon icon="solar:tag-bold" class="text-sm text-white"></iconify-icon>
@@ -21,8 +20,6 @@
             <span class="sb-text font-syne text-sm font-extrabold tracking-tight text-white">DealHub</span>
             <span class="sb-badge rounded border border-brand/20 bg-brand/15 px-1.5 py-0.5 leading-none font-bold text-[9px] text-brand">ADMIN</span>
         </div>
-
-        <!-- Nav -->
         <nav class="flex flex-1 flex-col gap-0.5 overflow-x-hidden overflow-y-auto px-2 py-3" id="sb-nav">
             <p class="sb-section px-2 pt-1 pb-1.5 font-bold tracking-widest text-[9px] text-dark-text/50 uppercase">
                 Principal
@@ -35,7 +32,7 @@
                 </span>
                 <span class="sb-text">Vue d'ensemble</span>
             </a>
-            <a href="/" class="nav-item" data-tip="Utilisateurs">
+            <a asp-action="Index" class="nav-item" asp-area="Admin">
                 <span class="nav-icon"><iconify-icon icon="solar:users-group-rounded-linear"></iconify-icon></span>
                 <span class="sb-text">Utilisateurs</span>
                 <span class="sb-badge ml-auto rounded bg-white/[.07] px-1.5 py-0.5 font-bold text-[9px] text-dark-text">248</span>
@@ -48,7 +45,7 @@
                 <span class="nav-icon"><iconify-icon icon="solar:shop-2-linear"></iconify-icon></span>
                 <span class="sb-text">Marchands</span>
             </a>
-            <a href="/" class="nav-item" data-tip="Modération" onclick="navigate('moderation')">
+            <a href="/" class="nav-item" data-tip="Modération">
                 <span class="nav-icon"><iconify-icon icon="solar:shield-warning-linear"></iconify-icon></span>
                 <span class="sb-text">Modération</span>
                 <span class="sb-badge ml-auto h-1.5 w-1.5 shrink-0 rounded-full bg-red-500"></span>
@@ -80,7 +77,7 @@
             </div>
         </div>
     </aside>
-    <div class="flex min-w-0 flex-1 flex-col overflow-hidden">
+    <div class="flex min-w-0 flex-1 flex-col overflow-hidden bg-background">
         <header class="z-10 flex h-[52px] shrink-0 items-center justify-between border-b border-ink-7 bg-surface px-4">
             <div class="flex items-center gap-1">
                 <button onclick="toggleSidebar()"
@@ -107,7 +104,7 @@
         </header>
 
         @RenderBody()
-    </div><!-- /main -->
+    </div>
     <!-- ════════════════════════════════════════
          MODALS
     ════════════════════════════════════════ -->

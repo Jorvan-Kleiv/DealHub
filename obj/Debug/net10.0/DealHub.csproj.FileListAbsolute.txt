@@ -440,7 +440,7 @@ C:\Users\CBT\source\repos\DealHub\obj\Debug\net10.0\refint\DealHub.dll
 C:\Users\CBT\source\repos\DealHub\obj\Debug\net10.0\DealHub.pdb
 C:\Users\CBT\source\repos\DealHub\obj\Debug\net10.0\DealHub.genruntimeconfig.cache
 C:\Users\CBT\source\repos\DealHub\obj\Debug\net10.0\ref\DealHub.dll
-C:\Users\CBT\source\repos\DealHub\obj\Debug\net10.0\compressed\wjh4h1bof9-{0}-xcu1vc73rp-xcu1vc73rp.gz
-C:\Users\CBT\source\repos\DealHub\obj\Debug\net10.0\compressed\jrwbb5k664-{0}-4gky5xk5t5-4gky5xk5t5.gz
-C:\Users\CBT\source\repos\DealHub\obj\Debug\net10.0\compressed\nvlmfs1cfm-{0}-wc2uelwh9k-wc2uelwh9k.gz
-C:\Users\CBT\source\repos\DealHub\obj\Debug\net10.0\compressed\3p55czssix-{0}-adtpv93pby-adtpv93pby.gz
+C:\Users\CBT\source\repos\DealHub\obj\Debug\net10.0\compressed\jrwbb5k664-{0}-nknlpbtbk7-nknlpbtbk7.gz
+C:\Users\CBT\source\repos\DealHub\obj\Debug\net10.0\compressed\wjh4h1bof9-{0}-ot047gb9q4-ot047gb9q4.gz
+C:\Users\CBT\source\repos\DealHub\obj\Debug\net10.0\compressed\3p55czssix-{0}-ru99ntpo5r-ru99ntpo5r.gz
+C:\Users\CBT\source\repos\DealHub\obj\Debug\net10.0\compressed\nvlmfs1cfm-{0}-nxbmpz5e3d-nxbmpz5e3d.gz

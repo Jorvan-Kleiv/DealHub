@@ -1,0 +1,192 @@
+﻿@model UserView
+@{
+    ViewData["title"] = "|Manage user";
+}
+
+<div id="page-users" class="page inset-0 flex flex-col gap-4 overflow-y-auto p-5">
+    <div class="flex items-start justify-between">
+        <div>
+            <h1 class="font-syne text-xl font-bold text-ink">Utilisateurs</h1>
+            <p class="mt-0.5 text-xs text-ink-5">248 membres — multi-rôles activés</p>
+        </div>
+        <div class="flex gap-2">
+            <button class="rounded-btn flex items-center gap-1.5 border border-ink-7 px-3 py-2 text-xs font-semibold text-ink-4 transition-colors hover:border-ink-6 hover:text-ink">
+                <iconify-icon icon="solar:export-linear"></iconify-icon>CSV
+            </button>
+            <button onclick="openModal('modal-invite')"
+                    class="rounded-btn flex items-center gap-1.5 bg-ink px-3 py-2 text-xs font-semibold text-white transition-colors hover:bg-ink-2">
+                <iconify-icon icon="solar:user-plus-rounded-linear"></iconify-icon>Inviter
+            </button>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-2 gap-2.5 sm:grid-cols-5">
+        <div class="rounded-card shadow-card border border-ink-7 bg-surface p-3">
+            <p class="mb-1 font-bold tracking-wider text-[10px] text-ink-5 uppercase">Total</p>
+            <p class="font-syne text-xl leading-none font-bold text-ink">
+                @Model.Users.Count()
+            </p>
+        </div>
+        <div class="rounded-card shadow-card border border-ink-7 bg-surface p-3">
+            <p class="mb-1 font-bold tracking-wider text-[10px] text-violet-500 uppercase">Admins</p>
+            <p class="font-syne text-xl leading-none font-bold text-violet-600">
+                @Model.Users.Where(u => u.RoleNames.Contains("Admin")).Count()
+            </p>
+        </div>
+        <div class="rounded-card shadow-card border border-ink-7 bg-surface p-3">
+            <p class="mb-1 font-bold tracking-wider text-[10px] text-blue-500 uppercase">Modérateurs</p>
+            <p class="font-syne text-xl leading-none font-bold text-blue-600">
+                @Model.Users.Where(u => u.RoleNames.Contains("Modo")).Count()
+            </p>
+        </div>
+        <div class="rounded-card shadow-card border border-ink-7 bg-surface p-3">
+            <p class="mb-1 font-bold tracking-wider text-[10px] text-amber-500 uppercase">Marchands</p>
+            <p class="font-syne text-xl leading-none font-bold text-amber-600">
+                @Model.Users.Where(u => u.RoleNames.Contains("Merchant")).Count()
+            </p>
+        </div>
+        <div class="rounded-card shadow-card border border-ink-7 bg-surface p-3">
+            <p class="mb-1 font-bold tracking-wider text-[10px] text-red-500 uppercase">Bannis</p>
+            <p class="font-syne text-xl leading-none font-bold text-red-600">
+                @Model.Users.Where(u => u.IsBanned).Count()
+            </p>
+        </div>
+    </div>
+
+    <div class="flex flex-wrap items-center gap-2 bg-red-100">
+        <div class="rounded-btn flex max-w-xs flex-1 items-center gap-2 border border-ink-7 bg-surface px-2 py-2 transition-colors focus-within:border-ink-5">
+            <iconify-icon icon="solar:magnifer-linear" class="shrink-0 text-ink-5"></iconify-icon>
+            <input type="text" placeholder="Rechercher…" oninput="filterUsers(this.value)"
+                   class="w-full bg-transparent text-sm outline-none placeholder:text-ink-5">
+        </div>
+        <select class="rounded-btn cursor-pointer border border-ink-7 bg-surface px-2 py-2 text-xs font-medium transition-colors outline-none hover:border-ink-5">
+            <option>Tous les rôles</option>
+            <option>Administrateur</option>
+            <option>Modérateur</option>
+            <option>Marchand</option>
+            <option>Utilisateur</option>
+        </select>
+        <select class="rounded-btn w-fit cursor-pointer border border-ink-7 bg-surface px-2 py-2 text-xs font-medium transition-colors outline-none hover:border-ink-5">
+            <option>Tous statuts</option>
+            <option>Actif</option>
+            <option>Banni</option>
+        </select>
+    </div>
+
+    <div class="rounded-card shadow-card overflow-hidden border border-ink-7 bg-surface">
+        <div class="overflow-x-auto">
+            <table class="tbl" id="users-table">
+                <thead>
+                    <tr>
+                        <th><input type="checkbox" class="accent-ink"></th>
+                        <th>Utilisateur</th>
+                        <th>Rôles</th>
+                        <th>Réputation</th>
+                        <th>Deals</th>
+                        <th>Inscrit le</th>
+                        <th>Statut</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="users-tbody">
+                    @if (Model.Users != null && Model.Users.Any())
+                    {
+                        foreach (ApplicationUser user in Model.Users)
+                        {
+                            <tr data-name="Jorvan Kleiv" data-email="jorvan@dealhub.fr">
+                                <td><input type="checkbox" class="accent-ink"></td>
+                                <td>
+                                    <div class="flex items-center gap-2.5">
+                                        <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-linear-to-tr from-violet-600 to-violet-400 font-bold text-[10px] text-white uppercase">
+                                            @user.FirstName.Substring(0, 1)@user.LastName.Substring(0, 1)
+                                        </div>
+                                        <div>
+                                            <p class="text-sm font-semibold text-ink capitalize">
+                                                @user.FirstName @user.LastName
+                                            </p>
+                                            <p class="text-[10px] text-ink-5">
+                                                @user.Email
+                                            </p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="flex flex-wrap gap-1">
+                                        <span class="rt rt-admin-on"
+                                              onclick="toggleRole(this)">
+                                            <iconify-icon icon="solar:crown-linear"
+                                                          class="text-[10px]"></iconify-icon>Admin
+                                        </span><span class="rt rt-modo-off"
+                                                     onclick="toggleRole(this)">
+                                            <iconify-icon icon="solar:shield-linear"
+                                                          class="text-[10px]"></iconify-icon>Modo
+                                        </span><span class="rt rt-march-off"
+                                                     onclick="toggleRole(this)">
+                                            <iconify-icon icon="solar:shop-2-linear"
+                                                          class="text-[10px]"></iconify-icon>March.
+                                        </span><span class="rt rt-user-off"
+                                                     onclick="toggleRole(this)">
+                                            <iconify-icon icon="solar:user-linear"
+                                                          class="text-[10px]"></iconify-icon>User
+                                        </span>
+                                    </div>
+                                </td>
+                                <td class="font-syne text-sm font-bold">
+                                    @user.Reputation
+                                </td>
+                                <td class="text-sm text-ink-4">
+                                    @user.Deals.Count()
+                                </td>
+                                <td class="text-[10px] text-ink-5">
+                                    @user.CreatedAt.ToString("dd - MM - yyyy")
+                                </td>
+                                <td><span class="badge @(user.IsBanned ? "b-banni": "b-actif")">
+                                        @(user.IsBanned ? "Banni" : "Actif")
+                                </span></td>
+                                <td>
+                                    <div class="flex gap-1">
+                                        <button class="rounded-btn border border-ink-7 px-2 py-1 text-[10px] transition-colors hover:border-ink-5 hover:text-ink"
+                                                onclick="openModal('modal-warn-user','Jorvan Kleiv')">
+                                            ⚠️
+                                        </button><button class="rounded-btn border border-ink-7 px-2 py-1 text-[10px] transition-colors hover:border-ink-5 hover:text-ink"
+                                                         onclick="openModal('modal-ban-user','Jorvan Kleiv')">
+                                            🔒
+                                        </button><button class="rounded-btn border border-ink-7 px-2 py-1 text-[10px] text-red-500 transition-colors hover:border-red-200 hover:bg-red-50"
+                                                         onclick="openModal('modal-delete-user','Jorvan Kleiv')">
+                                            🗑
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="flex items-center justify-between border-t border-ink-7 px-4 py-2.5">
+            <p class="text-xs text-ink-5">
+                Affichage <strong class="text-ink-3">1–5</strong> sur <strong class="text-ink-3">248</strong>
+            </p>
+            <div class="flex gap-1">
+                <button class="rounded border border-ink-7 px-2.5 py-1 text-xs text-ink-5 transition-colors hover:bg-ink-8">
+                    ←
+                </button>
+                <button class="rounded bg-ink px-2.5 py-1 text-xs font-semibold text-white">1</button>
+                <button class="rounded border border-ink-7 px-2.5 py-1 text-xs text-ink-5 transition-colors hover:bg-ink-8">
+                    2
+                </button>
+                <button class="rounded border border-ink-7 px-2.5 py-1 text-xs text-ink-5 transition-colors hover:bg-ink-8">
+                    3
+                </button>
+                <button class="rounded border border-ink-7 px-2.5 py-1 text-xs text-ink-5">…</button>
+                <button class="rounded border border-ink-7 px-2.5 py-1 text-xs text-ink-5 transition-colors hover:bg-ink-8">
+                    25
+                </button>
+                <button class="rounded border border-ink-7 px-2.5 py-1 text-xs text-ink-5 transition-colors hover:bg-ink-8">
+                    →
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+

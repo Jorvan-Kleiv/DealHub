@@ -1,22 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using DealHub.Data;
+using DealHub.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using DealHub.Data;
-using DealHub.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace DealHub.Controllers
 {
     public class DealsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public DealsController(ApplicationDbContext context)
+        public DealsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Deals
@@ -56,22 +60,25 @@ namespace DealHub.Controllers
             return View();
         }
 
-        // POST: Deals/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Description,Status,Url,ImageUrl,OriginalPrice,FinalPrice,VoteScore,UserId,CategoryId,MerchantId")] Deal deal)
+        [Authorize] // ← ajoute ça si pas déjà sur le contrôleur
+        public async Task<IActionResult> Create(Deal deal)
         {
+            var userId = _userManager.GetUserId(User);
+            if (userId is null) return RedirectToAction("Login", "Account");
+
             if (ModelState.IsValid)
             {
+                deal.UserId = userId;
+                deal.CreatedAt = DateTime.Now;
                 _context.Add(deal);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryId"] = new SelectList(_context.Set<Category>(), "Id", "Id", deal.CategoryId);
-            ViewData["MerchantId"] = new SelectList(_context.Set<Merchant>(), "Id", "Id", deal.MerchantId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", deal.UserId);
+
+            ViewData["CategoryId"] = new SelectList(_context.Set<Category>(), "Id", "Name", deal.CategoryId);
+            ViewData["MerchantId"] = new SelectList(_context.Set<Merchant>(), "Id", "Name", deal.MerchantId);
             return View(deal);
         }
 
@@ -94,9 +101,6 @@ namespace DealHub.Controllers
             return View(deal);
         }
 
-        // POST: Deals/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,Status,Url,ImageUrl,OriginalPrice,FinalPrice,VoteScore,UserId,CategoryId,MerchantId")] Deal deal)
