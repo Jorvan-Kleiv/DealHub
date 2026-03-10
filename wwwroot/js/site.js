@@ -45,24 +45,7 @@ function closeMobile() {
     document.getElementById('mob-overlay').classList.remove('show');
 }
 
-function toggleRole(el) {
-    const classes = [...el.classList];
-    const type = classes.find(c => c.startsWith('rt-') && !c.endsWith('-on') && !c.endsWith('-off'))?.replace('rt-', '');
-    if (!type) return;
-    const isOn = el.classList.contains(`rt-${type}-on`);
-    el.classList.toggle(`rt-${type}-on`, !isOn);
-    el.classList.toggle(`rt-${type}-off`, isOn);
-    const labels = { admin: 'Admin', modo: 'Modérateur', march: 'Marchand', user: 'Utilisateur' };
-    showToast(isOn ? `Rôle "${labels[type]}" retiré` : `Rôle "${labels[type]}" ajouté`, isOn ? 'orange' : 'green');
-}
 
-function filterUsers(q = '') {
-    const term = q.toLowerCase();
-    document.querySelectorAll('#users-tbody tr').forEach(row => {
-        const match = !term || (row.dataset.name || '').toLowerCase().includes(term) || (row.dataset.email || '').toLowerCase().includes(term);
-        row.style.display = match ? '' : 'none';
-    });
-}
 
 function openModal(id, label) {
     if (label) {
@@ -108,43 +91,48 @@ function showToast(msg, color) {
     clearTimeout(t._t);
     t._t = setTimeout(() => t.classList.remove('show'), 3000);
 }
-// ── Aperçu image ───────────────────────────────────────────────────────
-const imgInput = document.getElementById("imageUrlInput");
-const imgPreview = document.getElementById("imgPreview");
-const imgSrc = document.getElementById("imgPreviewSrc");
+const fileInput = document.getElementById('imageFile');
+const uploadZone = document.getElementById('uploadZone');
+const uploadPlaceholder = document.getElementById('uploadPlaceholder');
+const imgPreview = document.getElementById('imgPreview');
+const fileInfo = document.getElementById('fileInfo');
+const fileNameEl = document.getElementById('fileName');
+const removeBtn = document.getElementById('removeFile');
 
-function updatePreview() {
-    const url = imgInput.value.trim();
-    if (url) {
-        imgSrc.src = url;
-        imgPreview.classList.remove("hidden");
-        imgPreview.classList.add("flex");
-    } else {
-        imgPreview.classList.add("hidden");
-        imgPreview.classList.remove("flex");
-    }
+function applyFile(file) {
+    if (!file || !file.type.startsWith('image/')) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        imgPreview.src = e.target.result;
+        imgPreview.classList.remove('hidden');
+        uploadPlaceholder.classList.add('hidden');
+        uploadZone.classList.replace('border-dashed', 'border-solid');
+        uploadZone.classList.add('border-brand');
+        fileInfo.classList.replace('hidden', 'flex');
+        fileNameEl.textContent = file.name;
+    };
+    reader.readAsDataURL(file);
 }
-imgInput.addEventListener("input", updatePreview);
-updatePreview();
 
-// ── Calcul réduction ─────────────────────────────────────────────────
-const priceOriginal = document.getElementById("priceOriginal");
-const priceFinal = document.getElementById("priceFinal");
-const discountBadge = document.getElementById("discountBadge");
-const discountText = document.getElementById("discountText");
+fileInput.addEventListener('change', () => { if (fileInput.files[0]) applyFile(fileInput.files[0]); });
 
-function updateDiscount() {
-    const orig = parseFloat(priceOriginal.value);
-    const final = parseFloat(priceFinal.value);
-    if (orig > 0 && final >= 0 && final < orig) {
-        const pct = Math.round((orig - final) / orig * 100);
-        discountText.textContent = `-${pct}% d'économie — vous économisez ${(orig - final).toFixed(2)} €`;
-        discountBadge.classList.remove("hidden");
-        discountBadge.classList.add("flex");
-    } else {
-        discountBadge.classList.add("hidden");
-        discountBadge.classList.remove("flex");
-    }
-}
-priceOriginal.addEventListener("input", updateDiscount);
-priceFinal.addEventListener("input", updateDiscount);
+uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.classList.add('border-brand', 'bg-brand/[.04]'); });
+uploadZone.addEventListener('dragleave', () => { uploadZone.classList.remove('border-brand', 'bg-brand/[.04]'); });
+uploadZone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    const file = e.dataTransfer.files[0];
+    if (file) { const dt = new DataTransfer(); dt.items.add(file); fileInput.files = dt.files; applyFile(file); }
+});
+
+removeBtn.addEventListener('click', (e) => {
+    e.preventDefault(); e.stopPropagation();
+    fileInput.value = '';
+    imgPreview.src = '';
+    imgPreview.classList.add('hidden');
+    uploadPlaceholder.classList.remove('hidden');
+    uploadZone.classList.replace('border-solid', 'border-dashed');
+    uploadZone.classList.remove('border-brand');
+    fileInfo.classList.replace('flex', 'hidden');
+    fileNameEl.textContent = '';
+});
+
