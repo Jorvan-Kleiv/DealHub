@@ -277,26 +277,51 @@ namespace DealHub.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime?>("AcceptedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Document")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsVerified")
                         .HasColumnType("bit");
 
                     b.Property<string>("LogUrl")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("OwnerId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("RefueReason")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("RefutedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Siret")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("SubmitAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("WebsiteUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("OwnerId")
+                        .IsUnique();
 
                     b.ToTable("Merchants");
                 });
@@ -325,56 +350,6 @@ namespace DealHub.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Report");
-                });
-
-            modelBuilder.Entity("DealHub.Models.VerificationDemand", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("AdminSolverFullName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("EnterpriseName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RefuseReason")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("ResolvedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Siret")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("SubmitAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("WebsiteUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
-
-                    b.ToTable("VerificationDemand");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -548,15 +523,15 @@ namespace DealHub.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("DealHub.Models.VerificationDemand", b =>
+            modelBuilder.Entity("DealHub.Models.Merchant", b =>
                 {
-                    b.HasOne("DealHub.Models.ApplicationUser", "User")
-                        .WithOne("VerificationDemand")
-                        .HasForeignKey("DealHub.Models.VerificationDemand", "UserId")
+                    b.HasOne("DealHub.Models.ApplicationUser", "Owner")
+                        .WithOne("merchant")
+                        .HasForeignKey("DealHub.Models.Merchant", "OwnerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.Navigation("Owner");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -616,7 +591,7 @@ namespace DealHub.Migrations
 
                     b.Navigation("Deals");
 
-                    b.Navigation("VerificationDemand");
+                    b.Navigation("merchant");
                 });
 
             modelBuilder.Entity("DealHub.Models.Category", b =>

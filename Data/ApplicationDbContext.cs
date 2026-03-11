@@ -9,7 +9,6 @@ namespace DealHub.Data
     {
         public DbSet<Deal> Deal { get; set; } = default!;
         public DbSet<Category> Category { get; set; } = default!;
-        public DbSet<VerificationDemand> VerificationDemand { get; set; } = default!;
         public DbSet<Report> Report { get; set; } = default!;
         public DbSet<Merchant> Merchants { get; set; }
 

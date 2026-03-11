@@ -21,6 +21,6 @@ namespace DealHub.Models
         public int Reputation {  get; set; } = 0;
         public List<Deal> Deals { get; set; } = new();
         public List<Alert> Alerts { get; set; } = new();
-        public VerificationDemand? VerificationDemand { get; set; }
+        public Merchant? merchant { get; set; }
     }
 }

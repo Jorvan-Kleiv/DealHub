@@ -178,26 +178,6 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/CBT/source/repos/DealHub/Views/VerificationDemands/Create.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVmVyaWZpY2F0aW9uRGVtYW5kc1xDcmVhdGUuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/CBT/source/repos/DealHub/Views/VerificationDemands/Delete.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVmVyaWZpY2F0aW9uRGVtYW5kc1xEZWxldGUuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/CBT/source/repos/DealHub/Views/VerificationDemands/Details.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVmVyaWZpY2F0aW9uRGVtYW5kc1xEZXRhaWxzLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/CBT/source/repos/DealHub/Views/VerificationDemands/Edit.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVmVyaWZpY2F0aW9uRGVtYW5kc1xFZGl0LmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/CBT/source/repos/DealHub/Views/VerificationDemands/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVmVyaWZpY2F0aW9uRGVtYW5kc1xJbmRleC5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/CBT/source/repos/DealHub/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 

@@ -1,3 +1,5 @@
+wwwroot\css\site.css
+wwwroot\css\site.output.css
 wwwroot\favicon.ico
 wwwroot\js\site.js
 wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css
@@ -73,8 +75,8 @@ wwwroot\uploads\deals\725461cc-7481-477e-9b7f-cd1f5d5daa52.jpg
 wwwroot\uploads\deals\cb6676da-0d57-439c-ba48-e7c61b345602.jpg
 wwwroot\uploads\deals\feded342-970e-4551-aa38-7584ed5fa199.jpg
 wwwroot\css\output.css
-wwwroot\css\site.css
-wwwroot\css\site.output.css
+C:\Users\CBT\source\repos\DealHub\wwwroot\css\site.css
+C:\Users\CBT\source\repos\DealHub\wwwroot\css\site.output.css
 C:\Users\CBT\source\repos\DealHub\wwwroot\favicon.ico
 C:\Users\CBT\source\repos\DealHub\wwwroot\js\site.js
 C:\Users\CBT\source\repos\DealHub\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css
@@ -143,5 +145,3 @@ C:\Users\CBT\source\repos\DealHub\wwwroot\lib\jquery\dist\jquery.slim.min.js
 C:\Users\CBT\source\repos\DealHub\wwwroot\lib\jquery\dist\jquery.slim.min.map
 C:\Users\CBT\source\repos\DealHub\wwwroot\lib\jquery\LICENSE.txt
 C:\Users\CBT\source\repos\DealHub\wwwroot\css\output.css
-C:\Users\CBT\source\repos\DealHub\wwwroot\css\site.css
-C:\Users\CBT\source\repos\DealHub\wwwroot\css\site.output.css
