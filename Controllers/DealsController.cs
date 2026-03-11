@@ -1,4 +1,5 @@
-﻿using DealHub.Data;
+﻿using Azure.Core;
+using DealHub.Data;
 using DealHub.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -12,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace DealHub.Controllers
 {
+    [Authorize]
     public class DealsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -23,14 +25,20 @@ namespace DealHub.Controllers
             _userManager = userManager;
         }
 
-        // GET: Deals
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Deal.Include(d => d.Category).Include(d => d.Merchant).Include(d => d.User);
-            return View(await applicationDbContext.ToListAsync());
+            var categories = await _context.Category.ToListAsync();
+            var merchants = await _context.Merchants.ToListAsync();
+            var dealDto = new DealDto();
+            dealDto.Deals = await _context.Deal.ToListAsync();
+            dealDto.Categories = categories;
+            dealDto.Merchants = merchants;
+            return View(dealDto);
         }
 
-        // GET: Deals/Details/5
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -52,6 +60,7 @@ namespace DealHub.Controllers
         }
 
         // GET: Deals/Create
+        [Authorize]
         public async Task<IActionResult> Create()
         {
 
@@ -66,14 +75,37 @@ namespace DealHub.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize] // ← ajoute ça si pas déjà sur le contrôleur
+        [Authorize]
         public async Task<IActionResult> Create(DealRequest request)
         {
             var userId = _userManager.GetUserId(User);
             if (userId is null) return RedirectToAction("Login", "Account");
-
+            ModelState.Remove("Categories");
+            ModelState.Remove("Merchants");
+            ModelState.Remove("ImageFile");
+            ModelState.Remove("Deal.ImageUrl");   // ✅ géré après upload
+            ModelState.Remove("Deal.Category");   // ✅ nav property, pas besoin de valider
+            ModelState.Remove("Deal.CreatedAt");
             if (ModelState.IsValid)
             {
+                if (request.ImageFile is { Length: > 0 })
+                {
+                    var uploadDir = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "deals");
+                    Directory.CreateDirectory(uploadDir);
+
+                    var fileName = $"{Guid.NewGuid()}{Path.GetExtension(request.ImageFile.FileName)}";
+                    var filePath = Path.Combine(uploadDir, fileName);
+
+                    using var stream = new FileStream(filePath, FileMode.Create);
+                    await request.ImageFile.CopyToAsync(stream);
+
+                    request.Deal.ImageUrl = $"/uploads/deals/{fileName}";
+                }
+                foreach (var error in ModelState)
+                {
+                    if (error.Value.Errors.Count > 0)
+                        Console.WriteLine($"❌ {error.Key}: {error.Value.Errors[0].ErrorMessage}");
+                }
                 request.Deal.UserId = userId;
                 request.Deal.CreatedAt = DateTime.Now;
                 _context.Add(request.Deal);
@@ -81,9 +113,9 @@ namespace DealHub.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewData["CategoryId"] = new SelectList(_context.Set<Category>(), "Id", "Name", request.Deal.CategoryId);
-            ViewData["MerchantId"] = new SelectList(_context.Set<Merchant>(), "Id", "Name", request.Deal.MerchantId);
-            return View(request.Deal);
+            request.Categories = _context.Category?.ToList() ?? new List<Category>();
+            request.Merchants = _context.Merchants?.ToList() ?? new List<Merchant>();
+            return View(request);
         }
 
         // GET: Deals/Edit/5
@@ -107,37 +139,57 @@ namespace DealHub.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,Status,Url,ImageUrl,OriginalPrice,FinalPrice,VoteScore,UserId,CategoryId,MerchantId")] Deal deal)
+        public async Task<IActionResult> Edit(int id, DealRequest request)
         {
-            if (id != deal.Id)
-            {
-                return NotFound();
-            }
+            if (id != request.Deal.Id) return NotFound();
+
+            ModelState.Remove("Categories");
+            ModelState.Remove("Merchants");
+            ModelState.Remove("ImageFile");
+            ModelState.Remove("Deal.ImageUrl");
+            ModelState.Remove("Deal.Category");
+            ModelState.Remove("Deal.CreatedAt");
+            ModelState.Remove("Deal.UserId");
+            ModelState.Remove("Deal.User");
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(deal);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!DealExists(deal.Id))
+                    if (request.ImageFile is { Length: > 0 })
                     {
-                        return NotFound();
+                        var uploadDir = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "deals");
+                        Directory.CreateDirectory(uploadDir);
+                        var fileName = $"{Guid.NewGuid()}{Path.GetExtension(request.ImageFile.FileName)}";
+                        var filePath = Path.Combine(uploadDir, fileName);
+                        using var stream = new FileStream(filePath, FileMode.Create);
+                        await request.ImageFile.CopyToAsync(stream);
+                        request.Deal.ImageUrl = $"/uploads/deals/{fileName}";
                     }
                     else
                     {
-                        throw;
+                        var existing = await _context.Deal.AsNoTracking()
+                                             .FirstOrDefaultAsync(d => d.Id == id);
+                        request.Deal.ImageUrl = existing?.ImageUrl;
                     }
+
+                    var existing2 = await _context.Deal.AsNoTracking()
+                                         .FirstOrDefaultAsync(d => d.Id == id);
+                    request.Deal.UserId = existing2?.UserId;
+
+                    _context.Update(request.Deal);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
                 }
-                return RedirectToAction(nameof(Index));
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!DealExists(request.Deal.Id)) return NotFound();
+                    throw;
+                }
             }
-            ViewData["CategoryId"] = new SelectList(_context.Set<Category>(), "Id", "Id", deal.CategoryId);
-            ViewData["MerchantId"] = new SelectList(_context.Set<Merchant>(), "Id", "Id", deal.MerchantId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", deal.UserId);
-            return View(deal);
+            request.Categories = await _context.Category.ToListAsync();
+            request.Merchants = await _context.Merchants.ToListAsync();
+            return View(request);
         }
 
         // GET: Deals/Delete/5
@@ -181,4 +233,5 @@ namespace DealHub.Controllers
             return _context.Deal.Any(e => e.Id == id);
         }
     }
+    
 }

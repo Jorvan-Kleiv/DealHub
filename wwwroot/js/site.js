@@ -135,4 +135,17 @@ removeBtn.addEventListener('click', (e) => {
     fileInfo.classList.replace('flex', 'hidden');
     fileNameEl.textContent = '';
 });
+function toggleDropdown(event) {
+    event.stopPropagation();
+    const dropdown = document.getElementById('user-dropdown');
+    dropdown.classList.toggle('hidden');
+}
+
+window.addEventListener('click', function (event) {
+    const dropdown = document.getElementById('user-dropdown');
+    const btn = document.getElementById('user-menu-btn');
+    if (!btn.contains(event.target) && !dropdown.classList.contains('hidden')) {
+        dropdown.classList.add('hidden');
+    }
+});
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using DealHub.Models.enums;
+using Microsoft.AspNetCore.Identity;
 
 namespace DealHub.Models
 {
@@ -10,10 +11,10 @@ namespace DealHub.Models
             var roleManager = provider.GetRequiredService<RoleManager<IdentityRole>>();
 
             string firstName = "Admin";
-            string lastName = "Bourbon";
-            string email = "admin@bourbon.org";
+            string lastName = "Dealhub";
+            string email = "admin@dealhub.cm";
             string password = "Sesame@123!";
-            string roleName = "Admin";
+            string roleName = RoleEnum.ADMIN.ToString();
 
             if(await roleManager.FindByNameAsync(roleName) == null)
             {

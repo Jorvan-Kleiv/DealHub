@@ -216,7 +216,7 @@ namespace DealHub.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CategoryId")
+                    b.Property<int?>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
@@ -231,17 +231,16 @@ namespace DealHub.Migrations
                         .HasColumnType("float");
 
                     b.Property<string>("ImageUrl")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("MerchantId")
+                    b.Property<int?>("MerchantId")
                         .HasColumnType("int");
 
                     b.Property<double>("OriginalPrice")
                         .HasColumnType("float");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -256,7 +255,7 @@ namespace DealHub.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("VoteScore")
+                    b.Property<int?>("VoteScore")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -289,13 +288,17 @@ namespace DealHub.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Siret")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("WebsiteUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Merchant");
+                    b.ToTable("Merchants");
                 });
 
             modelBuilder.Entity("DealHub.Models.Report", b =>
@@ -526,15 +529,11 @@ namespace DealHub.Migrations
                 {
                     b.HasOne("DealHub.Models.Category", "Category")
                         .WithMany("Deals")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CategoryId");
 
                     b.HasOne("DealHub.Models.Merchant", "Merchant")
                         .WithMany("Deals")
-                        .HasForeignKey("MerchantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MerchantId");
 
                     b.HasOne("DealHub.Models.ApplicationUser", "User")
                         .WithMany("Deals")

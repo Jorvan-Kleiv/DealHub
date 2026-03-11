@@ -5,6 +5,7 @@
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public string WebsiteUrl { get; set; } = string.Empty;
+        public string Siret { get; set; } = string.Empty;
         public string LogUrl { get; set; } = string.Empty;
         public bool IsVerified { get; set; } = false;
 

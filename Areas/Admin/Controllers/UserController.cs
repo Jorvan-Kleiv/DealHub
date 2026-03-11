@@ -1,11 +1,12 @@
 ﻿using DealHub.Models;
+using DealHub.Models.enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DealHub.Areas.Admin.Controllers
 {
-    [Authorize(Roles ="Admin")]
+    [Authorize(Roles = Roles.Admin)]
     [Area("Admin")]
     public class UserController : Controller
     {
@@ -36,5 +37,12 @@ namespace DealHub.Areas.Admin.Controllers
             };
             return View(_model);
         }
+    }
+    public static class Roles
+    {
+        public const string Admin = "ADMIN";
+        public const string Moderateur = "MODERATEUR";
+        public const string Marchand = "MARCHAND";
+        public const string User = "USER";
     }
 }

@@ -8,160 +8,173 @@
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
     @await RenderSectionAsync("Head", required: false)
 </head>
-    <body class="flex min-h-screen flex-col bg-background text-stone-800">
-        <header class="sticky top-0 z-50 border-b border-gray-200 bg-white">
-            <div class="mx-auto flex h-16 max-w-full items-center justify-between gap-4 px-4 lg:px-6">
+<body class="flex min-h-screen flex-col bg-background text-stone-800">
+    <header class="sticky top-0 z-50 border-b border-gray-200 bg-white">
+        <div class="mx-auto flex h-16 max-w-full items-center justify-between gap-4 px-4 lg:px-6">
 
-                <div class="flex items-center gap-4">
-                    <a href="/" class="font-display text-xl font-semibold tracking-tighter text-primary uppercase">
-                        DealHub
-                    </a>
+            <div class="flex items-center gap-4">
+                <a href="/" class="font-display text-xl font-semibold tracking-tighter text-primary uppercase">
+                    DealHub
+                </a>
+            </div>
+            <div class="mx-8 hidden max-w-2xl flex-1 md:block">
+                <div class="group relative">
+                    <iconify-icon icon="solar:magnifer-linear"
+                                  class="absolute top-1/2 left-3.5 -translate-y-1/2 text-base text-mutated transition-colors group-focus-within:text-primary">
+                    </iconify-icon>
+                    <input type="text"
+                           placeholder="Rechercher un deal, un marchand..."
+                           class="w-full rounded-full border border-gray-200 bg-background py-2 pr-12 pl-10 text-sm text-stone-800 transition-all placeholder:text-mutated focus:border-primary focus:bg-white focus:ring-1 focus:ring-primary focus:outline-none" />
+                    <div class="absolute top-1/2 right-3 flex h-5 w-5 -translate-y-1/2 items-center justify-center rounded border border-gray-200 bg-white text-xs font-medium text-mutated shadow-sm">
+                        /
+                    </div>
                 </div>
-                <div class="mx-8 hidden max-w-2xl flex-1 md:block">
-                    <div class="group relative">
-                        <iconify-icon icon="solar:magnifer-linear"
-                                      class="absolute top-1/2 left-3.5 -translate-y-1/2 text-base text-mutated transition-colors group-focus-within:text-primary">
-                        </iconify-icon>
-                        <input type="text"
-                               placeholder="Rechercher un deal, un marchand..."
-                               class="w-full rounded-full border border-gray-200 bg-background py-2 pr-12 pl-10 text-sm text-stone-800 transition-all placeholder:text-mutated focus:border-primary focus:bg-white focus:ring-1 focus:ring-primary focus:outline-none" />
-                        <div class="absolute top-1/2 right-3 flex h-5 w-5 -translate-y-1/2 items-center justify-center rounded border border-gray-200 bg-white text-xs font-medium text-mutated shadow-sm">
-                            /
+            </div>
+            <div class="flex items-center gap-2 sm:gap-4">
+                <button class="flex items-center justify-center rounded-full p-2 text-stone-800 transition-colors hover:bg-background md:hidden">
+                    <iconify-icon icon="solar:magnifer-linear" class="text-lg"></iconify-icon>
+                </button>
+
+                <a asp-controller="Deals" asp-action="Create"
+                   class="hidden items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1.5 text-sm font-medium text-primary transition-colors hover:bg-primary/20 sm:flex">
+                    <iconify-icon icon="solar:add-circle-linear" class="text-base"></iconify-icon>
+                    Publier
+                </a>
+
+                <div class="mx-1 hidden h-6 w-px bg-gray-200 sm:block"></div>
+                <div class="relative">
+                    <button id="btnToggleNotif"
+                            class="group relative flex items-center justify-center rounded-full p-2 text-stone-800 transition-colors hover:bg-background">
+                        <iconify-icon icon="solar:bell-linear" class="text-lg transition-colors group-hover:text-primary"></iconify-icon>
+                        <span class="absolute top-1.5 right-1.5 h-2 w-2 rounded-full border border-white bg-primary"></span>
+                    </button>
+                    <div id="notifPanel"
+                         class="absolute top-full right-0 z-50 mt-2 hidden w-80 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-lg">
+                        <div class="flex items-center justify-between border-b border-gray-200 p-3">
+                            <h3 class="text-sm font-semibold text-stone-800">Notifications</h3>
+                            <button onclick="markNotifsRead()" class="text-xs font-medium text-primary hover:underline">
+                                Tout marquer comme lu
+                            </button>
+                        </div>
+                        <div class="max-h-80 overflow-y-auto">
+                            <div class="flex cursor-pointer gap-3 border-b border-gray-200 p-3 transition-colors hover:bg-background" id="notif1">
+                                <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
+                                    <iconify-icon icon="solar:fire-bold" class="text-base"></iconify-icon>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-stone-800">Votre alerte <strong>"PS5"</strong> a de nouveaux résultats.</p>
+                                    <span class="text-xs text-mutated">Il y a 10 min</span>
+                                </div>
+                            </div>
+                            <div class="flex cursor-pointer gap-3 p-3 opacity-60 transition-colors hover:bg-background">
+                                <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#4A90D9]/10 text-[#4A90D9]">
+                                    <iconify-icon icon="solar:chat-round-dots-bold" class="text-base"></iconify-icon>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-stone-800">Nouvel avis sur <strong>Baskets Nike Air Max</strong>.</p>
+                                    <span class="text-xs text-mutated">Il y a 2h</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="flex items-center gap-2 sm:gap-4">
-                    <button class="flex items-center justify-center rounded-full p-2 text-stone-800 transition-colors hover:bg-background md:hidden">
-                        <iconify-icon icon="solar:magnifer-linear" class="text-lg"></iconify-icon>
-                    </button>
-
-                    <a asp-controller="Deals" asp-action="Create"
-                       class="hidden items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1.5 text-sm font-medium text-primary transition-colors hover:bg-primary/20 sm:flex">
-                        <iconify-icon icon="solar:add-circle-linear" class="text-base"></iconify-icon>
-                        Publier
-                    </a>
-
-                    <div class="mx-1 hidden h-6 w-px bg-gray-200 sm:block"></div>
-                    <div class="relative">
-                        <button id="btnToggleNotif"
-                                class="group relative flex items-center justify-center rounded-full p-2 text-stone-800 transition-colors hover:bg-background">
-                            <iconify-icon icon="solar:bell-linear" class="text-lg transition-colors group-hover:text-primary"></iconify-icon>
-                            <span class="absolute top-1.5 right-1.5 h-2 w-2 rounded-full border border-white bg-primary"></span>
-                        </button>
-                        <div id="notifPanel"
-                             class="absolute top-full right-0 z-50 mt-2 hidden w-80 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-lg">
-                            <div class="flex items-center justify-between border-b border-gray-200 p-3">
-                                <h3 class="text-sm font-semibold text-stone-800">Notifications</h3>
-                                <button onclick="markNotifsRead()" class="text-xs font-medium text-primary hover:underline">
-                                    Tout marquer comme lu
-                                </button>
-                            </div>
-                            <div class="max-h-80 overflow-y-auto">
-                                <div class="flex cursor-pointer gap-3 border-b border-gray-200 p-3 transition-colors hover:bg-background" id="notif1">
-                                    <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
-                                        <iconify-icon icon="solar:fire-bold" class="text-base"></iconify-icon>
-                                    </div>
-                                    <div>
-                                        <p class="text-sm text-stone-800">Votre alerte <strong>"PS5"</strong> a de nouveaux résultats.</p>
-                                        <span class="text-xs text-mutated">Il y a 10 min</span>
-                                    </div>
-                                </div>
-                                <div class="flex cursor-pointer gap-3 p-3 opacity-60 transition-colors hover:bg-background">
-                                    <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#4A90D9]/10 text-[#4A90D9]">
-                                        <iconify-icon icon="solar:chat-round-dots-bold" class="text-base"></iconify-icon>
-                                    </div>
-                                    <div>
-                                        <p class="text-sm text-stone-800">Nouvel avis sur <strong>Baskets Nike Air Max</strong>.</p>
-                                        <span class="text-xs text-mutated">Il y a 2h</span>
-                                    </div>
-                                </div>
-                            </div>
+                <button class="group flex items-center justify-center rounded-full p-2 text-stone-800 transition-colors hover:bg-background">
+                    <iconify-icon icon="solar:heart-linear" class="text-lg transition-colors group-hover:text-primary"></iconify-icon>
+                </button>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <button id="drop-trigger" onclick="toggleDropdown(event)" class="ml-1 flex items-center gap-2 rounded-full border border-gray-200 p-1 pr-1.5 pl-2 text-stone-800 transition-all hover:bg-background">
+                        <iconify-icon icon="solar:alt-arrow-down-linear" class="h-4 w-4 text-ink-4"></iconify-icon>
+                        <span class="hidden text-sm font-medium text-mutated capitalize lg:block">@User.Identity?.Name.Split("@")[0]</span>
+                        <div class="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full border border-brand bg-brand/80 uppercase">
+                            @User.Identity?.Name?.Substring(0, 1)
                         </div>
-                    </div>
-                    <button class="group flex items-center justify-center rounded-full p-2 text-stone-800 transition-colors hover:bg-background">
-                        <iconify-icon icon="solar:heart-linear" class="text-lg transition-colors group-hover:text-primary"></iconify-icon>
                     </button>
+                }
+                else
+                {
                     <button class="ml-1 flex items-center gap-2 rounded-full border border-transparent p-1 pr-1.5 pl-2 text-stone-800 transition-all hover:border-gray-200 hover:bg-background">
                         <span class="hidden text-sm font-medium text-mutated lg:block">Connexion</span>
                         <div class="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full border border-gray-200 bg-gray-200">
                             <iconify-icon icon="solar:user-rounded-linear" class="text-base text-mutated"></iconify-icon>
                         </div>
                     </button>
-
-                </div>
-            </div>
-        </header>
-        <nav class="sticky top-16 z-40 border-b border-gray-200 bg-white">
-            <div class="mx-auto flex max-w-[1440px] items-center gap-4 px-4 py-2 lg:px-6">
-
-                <div class="flex items-center gap-2 border-r border-gray-200 pr-4">
-                    <button class="flex items-center gap-1.5 rounded-full bg-stone-800 px-3 py-1.5 text-xs font-medium tracking-wide text-white">
-                        <iconify-icon icon="solar:fire-linear" class="text-sm"></iconify-icon>
-                        Trending
-                    </button>
-                    <button class="flex items-center gap-1.5 rounded-full bg-transparent px-3 py-1.5 text-xs font-medium tracking-wide text-mutated transition-colors hover:bg-background hover:text-stone-800">
-                        <iconify-icon icon="solar:clock-circle-linear" class="text-sm"></iconify-icon>
-                        Récents
-                    </button>
-                </div>
-
-                <div class="no-scrollbar flex flex-1 items-center gap-2 overflow-x-auto">
-                    <a href="#" class="rounded-full border border-gray-200 bg-white px-3 py-1.5 text-xs font-medium whitespace-nowrap text-mutated transition-colors hover:border-stone-800 hover:text-stone-800">High-Tech</a>
-                    <a href="#" class="rounded-full border border-gray-200 bg-white px-3 py-1.5 text-xs font-medium whitespace-nowrap text-mutated transition-colors hover:border-stone-800 hover:text-stone-800">Jeux Vidéo</a>
-                    <a href="#" class="rounded-full border border-gray-200 bg-white px-3 py-1.5 text-xs font-medium whitespace-nowrap text-mutated transition-colors hover:border-stone-800 hover:text-stone-800">Maison</a>
-                    <a href="#" class="rounded-full border border-gray-200 bg-white px-3 py-1.5 text-xs font-medium whitespace-nowrap text-mutated transition-colors hover:border-stone-800 hover:text-stone-800">Mode</a>
-                    <a href="#" class="rounded-full border border-gray-200 bg-white px-3 py-1.5 text-xs font-medium whitespace-nowrap text-mutated transition-colors hover:border-stone-800 hover:text-stone-800">Alimentaire</a>
-                    <a href="#" class="rounded-full border border-gray-200 bg-white px-3 py-1.5 text-xs font-medium whitespace-nowrap text-mutated transition-colors hover:border-stone-800 hover:text-stone-800">Forfaits</a>
-                    <a href="#" class="rounded-full border border-gray-200 bg-white px-3 py-1.5 text-xs font-medium whitespace-nowrap text-mutated transition-colors hover:border-stone-800 hover:text-stone-800">Voyages</a>
-                    <a href="#" class="rounded-full border border-gray-200 bg-white px-3 py-1.5 text-xs font-medium whitespace-nowrap text-mutated transition-colors hover:border-stone-800 hover:text-stone-800">Beauté</a>
-                </div>
-
-                <div class="hidden items-center border-l border-gray-200 pl-4 lg:flex">
-                    <div class="group relative flex cursor-pointer items-center gap-2 rounded-md border border-gray-200 bg-white px-3 py-1.5 text-xs font-medium text-stone-800 transition-colors hover:bg-background">
-                        <iconify-icon icon="solar:sort-from-top-to-bottom-linear"></iconify-icon>
-                        Trier par
-                        <iconify-icon icon="solar:alt-arrow-down-linear" class="text-mutated"></iconify-icon>
+                }
+                <div id="user-dropdown"
+                     class="rounded-card z-50 hidden w-52 border border-ink-7 bg-surface py-1.5 shadow-[0_8px_24px_rgba(0,0,0,0.08)]">
+                    <div class="px-4 py-2.5">
+                        <p class="text-xs font-semibold text-ink">@User.Identity?.Name?.Split("@")[0]</p>
+                        <p class="mt-0.5 truncate text-[11px] text-ink-5">jean.dupont@email.com</p>
                     </div>
-                </div>
 
-            </div>
-        </nav>
-        <main class="w-full flex-1 bg-background px-4 py-8 lg:px-6">
-            <div class="mx-auto max-w-[1440px]">
-                @RenderBody()
-            </div>
-        </main>
-        <footer class="border-t border-gray-200 bg-white">
-            <div class="mx-auto flex max-w-[1440px] flex-col items-center justify-between gap-6 px-4 py-8 md:flex-row md:py-12 lg:px-6">
+                    <div class="my-1 h-px bg-ink-7"></div>
 
-                <div class="flex flex-col items-center gap-2 md:items-start">
-                    <a href="/" class="text-xl font-semibold tracking-tighter text-stone-800 uppercase"
-                       style="font-family: 'Syne', sans-serif;">
-                        DealHub
+                    <button class="flex w-full items-center gap-2.5 px-4 py-2 font-medium text-[11px]
+                 text-ink-3 transition-colors hover:bg-ink-9 hover:text-ink">
+                        <iconify-icon icon="solar:user-circle-linear" class="text-sm text-ink-4"></iconify-icon>
+                        Mon profil
+                    </button>
+
+                    <a href="" class="flex w-full items-center gap-2.5 px-4 py-2 font-medium text-[11px]
+                    text-ink-3 transition-colors hover:bg-ink-9 hover:text-ink">
+                        <iconify-icon icon="solar:heart-linear" class="text-sm text-ink-4"></iconify-icon>
+                        Mes favoris
                     </a>
-                    <p class="max-w-xs text-center text-xs text-mutated md:text-left">
-                        La communauté francophone n°1 pour dénicher et partager les meilleures offres du net.
-                    </p>
-                </div>
 
-                <div class="flex flex-wrap items-center justify-center gap-6 text-sm font-medium text-mutated">
-                    <a href="#" class="transition-colors hover:text-stone-800">À propos</a>
-                    <a href="#" class="transition-colors hover:text-stone-800">Règles</a>
-                    <a href="#" class="transition-colors hover:text-stone-800">Contact</a>
-                    <a href="#" class="transition-colors hover:text-stone-800">CGU</a>
-                    <a href="#" class="transition-colors hover:text-stone-800">Confidentialité</a>
-                </div>
-
-                <div class="flex items-center gap-4">
-                    <a href="#" class="flex h-10 w-10 items-center justify-center rounded-full border border-gray-200 bg-background text-stone-800 transition-colors hover:border-primary hover:text-primary">
-                        <iconify-icon icon="solar:letter-linear" class="text-lg"></iconify-icon>
+                    <a href="" class="flex w-full items-center gap-2.5 px-4 py-2 font-medium text-[11px]
+                    text-ink-3 transition-colors hover:bg-ink-9 hover:text-ink">
+                        <iconify-icon icon="solar:settings-linear" class="text-sm text-ink-4"></iconify-icon>
+                        Paramètres
                     </a>
+
+                    <div class="my-1 h-px bg-ink-7"></div>
+
+                    <button class="flex w-full items-center gap-2.5 px-4 py-2 font-medium text-[11px]
+                 text-red-500 transition-colors hover:bg-red-50">
+                        <iconify-icon icon="solar:logout-2-linear" class="text-sm"></iconify-icon>
+                        Déconnexion
+                    </button>
                 </div>
-
             </div>
-        </footer>
+        </div>
+    </header>
+    @RenderSection("nav", required: false)
+    <main class="w-full flex-1 bg-background px-4 py-8 lg:px-6">
+        <div class="mx-auto max-w-[1440px]">
+            @RenderBody()
+        </div>
+    </main>
+    <footer class="border-t border-gray-200 bg-white">
+        <div class="mx-auto flex max-w-[1440px] flex-col items-center justify-between gap-6 px-4 py-8 md:flex-row md:py-12 lg:px-6">
 
-        <script src="~/js/site.js" asp-append-version="true"></script>
-        @await RenderSectionAsync("Scripts", required: false)
-    </body>
+            <div class="flex flex-col items-center gap-2 md:items-start">
+                <a href="/" class="text-xl font-semibold tracking-tighter text-stone-800 uppercase"
+                   style="font-family: 'Syne', sans-serif;">
+                    DealHub
+                </a>
+                <p class="max-w-xs text-center text-xs text-mutated md:text-left">
+                    La communauté francophone n°1 pour dénicher et partager les meilleures offres du net.
+                </p>
+            </div>
+
+            <div class="flex flex-wrap items-center justify-center gap-6 text-sm font-medium text-mutated">
+                <a href="#" class="transition-colors hover:text-stone-800">À propos</a>
+                <a href="#" class="transition-colors hover:text-stone-800">Règles</a>
+                <a href="#" class="transition-colors hover:text-stone-800">Contact</a>
+                <a href="#" class="transition-colors hover:text-stone-800">CGU</a>
+                <a href="#" class="transition-colors hover:text-stone-800">Confidentialité</a>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <a href="#" class="flex h-10 w-10 items-center justify-center rounded-full border border-gray-200 bg-background text-stone-800 transition-colors hover:border-primary hover:text-primary">
+                    <iconify-icon icon="solar:letter-linear" class="text-lg"></iconify-icon>
+                </a>
+            </div>
+
+        </div>
+    </footer>
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
 </html>

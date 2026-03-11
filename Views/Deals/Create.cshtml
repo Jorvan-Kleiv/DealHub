@@ -3,9 +3,8 @@
     ViewData["Title"] = "Publier un deal";
     Layout = "_Layout";
 }
-
 <div class="flex min-h-screen flex-col items-end gap-6 bg-canvas px-4">
-    <div class="mx-auto flex w-4xl max-w-4xl flex-col self-start">
+    <div class="mx-auto flex w-4xl max-w-4xl flex-col self-start sm:w-full">
         <a asp-action="Index"
            class="group mb-5 inline-flex items-center gap-1.5 text-xs text-ink-4 transition-colors hover:text-ink">
             <svg class="h-3.5 w-3.5 transition-transform group-hover:-translate-x-0.5"
@@ -27,8 +26,8 @@
             </div>
         </div>
     </div>
-    <div class="mx-auto w-4xl max-w-4xl">
-        <form asp-action="Create" method="post">
+    <div class="mx-auto w-4xl max-w-4xl sm:w-full">
+        <form asp-action="Create" method="post" enctype="multipart/form-data">
             @Html.AntiForgeryToken()
             <div asp-validation-summary="ModelOnly"
                  class="rounded-card mb-5 hidden items-start gap-2 border border-red-200 bg-red-50 px-4 py-3 text-xs text-red-700 [&:not(:empty)]:flex">
@@ -95,23 +94,23 @@
                     <span asp-validation-for="Deal.Url" class="mt-1 text-xs text-red-500"></span>
                 </div>
                 <div>
-                    <label class="mb-1.5 block font-semibold text-[11px] text-ink-3">Image du deal</label>
+                    <label asp-for="Deal.ImageUrl" class="mb-1.5 block text-xs font-semibold text-ink-3">Image du deal</label>
                     <label for="imageFile" id="uploadZone"
                            class="relative flex h-36 w-full cursor-pointer flex-col items-center justify-center gap-2 overflow-hidden rounded-xl border-2 border-dashed border-ink-6 bg-ink-9 transition hover:border-brand hover:bg-brand/[.04]">
                         <div id="uploadPlaceholder" class="pointer-events-none flex flex-col items-center gap-1.5 text-ink-4 transition">
                             <iconify-icon icon="solar:upload-linear" style="font-size:28px;"></iconify-icon>
-                            <span class="font-medium text-[11px]">Cliquez ou glissez une image</span>
+                            <span class="text-xs font-medium">Cliquez ou glissez une image</span>
                             <small class="text-[10px] text-ink-5">PNG, JPG, WEBP — max 5 Mo</small>
                         </div>
                         <img id="imgPreview" class="absolute inset-0 hidden h-full w-full rounded-[10px] object-cover" src="" alt="Aperçu" />
                     </label>
-                    <input type="file" id="imageFile" name="ImageFile"
+                    <input asp-for="Deal.ImageUrl" type="file" id="imageFile" name="ImageFile"
                            accept="image/png,image/jpeg,image/webp,image/gif"
                            class="sr-only" />
                     <div id="fileInfo" class="mt-2 hidden items-center justify-between gap-2 rounded-lg border border-ink-7 bg-ink-8 px-2.5 py-1.5">
                         <div class="flex min-w-0 items-center gap-1.5 text-ink-3">
                             <iconify-icon icon="solar:gallery-linear" class="flex-shrink-0 text-brand" style="font-size:14px;"></iconify-icon>
-                            <span id="fileName" class="truncate text-[11px]"></span>
+                            <span id="fileName" class="truncate text-xs"></span>
                         </div>
                         <button type="button" id="removeFile" class="flex rounded p-0.5 text-ink-4 transition hover:text-red-500">
                             <iconify-icon icon="solar:close-circle-linear" style="font-size:15px;"></iconify-icon>
@@ -131,14 +130,14 @@
                             Prix original
                             <span class="ml-0.5 text-brand">*</span>
                         </label>
-                        <div class="relative">
-                            <span class="absolute top-1/2 left-3 -translate-y-1/2 text-sm font-semibold text-ink-4">FCFA</span>
+                        <div class="rounded-btn flex w-full items-center border border-ink-7 bg-ink-9 px-3 text-sm text-ink transition-all
+                            placeholder:text-ink-5 focus-within:border-brand focus-within:ring-2 focus-within:ring-brand/15 focus-within:outline-none">
                             <input asp-for="Deal.OriginalPrice"
                                    type="number" min="0" step="0.01"
                                    placeholder="0.00"
                                    id="priceOriginal"
-                                   class="rounded-btn w-full border border-ink-7 bg-ink-9 py-2.5 pr-3 pl-7 text-sm text-ink transition-all
-                            placeholder:text-ink-5 focus:border-brand focus:ring-2 focus:ring-brand/15 focus:outline-none" />
+                                   class="grow-1 py-2.5 focus:outline-none" />
+                            <span class="text-sm font-semibold text-ink-4">FCFA</span>
                         </div>
                         <span asp-validation-for="Deal.OriginalPrice" class="mt-1 text-xs text-red-500"></span>
                     </div>
@@ -148,14 +147,14 @@
                             Prix deal
                             <span class="ml-0.5 text-brand">*</span>
                         </label>
-                        <div class="relative">
-                            <span class="absolute top-1/2 left-3 -translate-y-1/2 text-sm font-semibold text-ink-4">FCFA</span>
+                        <div class="rounded-btn flex w-full items-center border border-ink-7 bg-ink-9 px-3 text-sm text-ink transition-all
+                            placeholder:text-ink-5 focus-within:border-brand focus-within:ring-2 focus-within:ring-brand/15 focus-within:outline-none">
                             <input asp-for="Deal.FinalPrice"
                                    type="number" min="0" step="0.01"
                                    placeholder="0.00"
                                    id="priceFinal"
-                                   class="rounded-btn w-full border border-ink-7 bg-ink-9 py-2.5 pr-3 pl-7 text-sm text-ink transition-all
-                            placeholder:text-ink-5 focus:border-brand focus:ring-2 focus:ring-brand/15 focus:outline-none" />
+                                   class="grow-1 py-2.5 focus:outline-none" />
+                            <span class="text-sm font-semibold text-ink-4">FCFA</span>
                         </div>
                         <span asp-validation-for="Deal.FinalPrice" class="mt-1 text-xs text-red-500"></span>
                     </div>
@@ -194,7 +193,6 @@
                     <label asp-for="Deal.MerchantId"
                            class="mb-1.5 block text-xs font-semibold text-ink-3">
                         Marchand
-                        <span class="ml-0.5 text-brand">*</span>
                     </label>
                     <div class="relative">
                         <select asp-for="Deal.MerchantId"
@@ -245,7 +243,7 @@
           const final = parseFloat(priceFinal.value);
           if (orig > 0 && final >= 0 && final < orig) {
             const pct = Math.round((orig - final) / orig * 100);
-            discountText.textContent = `-${pct}% d'économie — vous économisez ${(orig - final).toFixed(2)} €`;
+            discountText.textContent = `-${pct}% d'économie — vous économisez ${(orig - final).toFixed(2)} FCFA`;
             discountBadge.classList.remove("hidden");
             discountBadge.classList.add("flex");
           } else {

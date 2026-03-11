@@ -73,19 +73,20 @@ namespace DealHub.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Merchant",
+                name: "Merchants",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     WebsiteUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Siret = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LogUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsVerified = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Merchant", x => x.Id);
+                    table.PrimaryKey("PK_Merchants", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -267,16 +268,16 @@ namespace DealHub.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(3000)", maxLength: 3000, nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Url = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     OriginalPrice = table.Column<double>(type: "float", nullable: false),
                     FinalPrice = table.Column<double>(type: "float", nullable: false),
-                    VoteScore = table.Column<int>(type: "int", nullable: false),
+                    VoteScore = table.Column<int>(type: "int", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    CategoryId = table.Column<int>(type: "int", nullable: false),
-                    MerchantId = table.Column<int>(type: "int", nullable: false)
+                    CategoryId = table.Column<int>(type: "int", nullable: true),
+                    MerchantId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -291,14 +292,12 @@ namespace DealHub.Migrations
                         name: "FK_Deal_Category_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "Category",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Deal_Merchant_MerchantId",
+                        name: "FK_Deal_Merchants_MerchantId",
                         column: x => x.MerchantId,
-                        principalTable: "Merchant",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalTable: "Merchants",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.InsertData(
@@ -418,7 +417,7 @@ namespace DealHub.Migrations
                 name: "Category");
 
             migrationBuilder.DropTable(
-                name: "Merchant");
+                name: "Merchants");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

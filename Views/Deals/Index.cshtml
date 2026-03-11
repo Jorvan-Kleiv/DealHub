@@ -1,12 +1,49 @@
-﻿@model IEnumerable<DealHub.Models.Deal>
+﻿@model DealDto
 
 @{
     ViewData["Title"] = "Deal's list";
 }
+@section nav {
+    <nav class="sticky top-16 z-40 border-b border-gray-200 bg-white">
+        <div class="mx-auto flex max-w-[1440px] items-center gap-4 px-4 py-2 lg:px-6">
 
-<h1>Index</h1>
+            <div class="flex items-center gap-2 border-r border-gray-200 pr-4">
+                <button class="flex items-center gap-1.5 rounded-full bg-stone-800 px-3 py-1.5 text-xs font-medium tracking-wide text-white">
+                    <iconify-icon icon="solar:fire-linear" class="text-sm"></iconify-icon>
+                    Trending
+                </button>
+                <button class="flex items-center gap-1.5 rounded-full bg-transparent px-3 py-1.5 text-xs font-medium tracking-wide text-mutated transition-colors hover:bg-background hover:text-stone-800">
+                    <iconify-icon icon="solar:clock-circle-linear" class="text-sm"></iconify-icon>
+                    Récents
+                </button>
+            </div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+            <div class="no-scrollbar flex flex-1 items-center gap-2 overflow-x-auto">
+            @foreach(var category in Model.Categories)
+                {
+                    <a asp-controller="Category" asp-action="DisplayByCategory" class="rounded-full border border-gray-200 bg-white px-3 py-1.5 text-xs font-medium whitespace-nowrap text-mutated transition-colors hover:border-stone-800 hover:text-stone-800">@category.Name</a>
+                }
+            </div>
+
+            <div class="hidden items-center border-l border-gray-200 pl-4 lg:flex">
+                <div class="group relative flex cursor-pointer items-center gap-2 rounded-md border border-gray-200 bg-white px-3 py-1.5 text-xs font-medium text-stone-800 transition-colors hover:bg-background">
+                    <iconify-icon icon="solar:sort-from-top-to-bottom-linear"></iconify-icon>
+                    Trier par
+                    <iconify-icon icon="solar:alt-arrow-down-linear" class="text-mutated"></iconify-icon>
+                </div>
+            </div>
+
+        </div>
+    </nav>
+}
+<h2 class="font-display text-3xl font-semibold text-stone-700">Les deals du moment</h2>
+<div class="flex min-h-screen flex-col gap-8 py-6 selection:bg-brand/10 selection:text-brand">
+    <div class="grid min-h-screen grid-cols-4 gap-4">
+        <div class="col-span-3 grid h-full min-h-full grid-cols-3 bg-brand text-white">
+
+        </div>
+        <div class="col-span-1 grid h-full min-h-full grid-cols-3 bg-brand/10 text-stone-700">Misere</div>
+    </div>
+
+</div>
 

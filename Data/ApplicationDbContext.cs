@@ -11,6 +11,7 @@ namespace DealHub.Data
         public DbSet<Category> Category { get; set; } = default!;
         public DbSet<VerificationDemand> VerificationDemand { get; set; } = default!;
         public DbSet<Report> Report { get; set; } = default!;
+        public DbSet<Merchant> Merchants { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -25,6 +26,8 @@ namespace DealHub.Data
                 new Category { Id = 6, Name = "Alimentaire", Description = "Produit de consommation", IsActive = true },
                 new Category { Id = 7, Name = "Voyages", Description = "Voyage a prix reduis", IsActive = true }
             );
+            builder.Entity<Deal>().Property(d => d.Status)
+                .HasConversion<string>();
         }
 
     }
