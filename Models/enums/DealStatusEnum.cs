@@ -2,9 +2,9 @@
 {
     public enum DealStatusEnum
     {
-        ACTIVE = 0,
-        EXPIRED = 1,
-        REPORTED = 2,
-        DELETED = 3,
+        ACTIVE,
+        EXPIRED,
+        REPORTED,
+        DELETED,
     }
 }

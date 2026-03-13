@@ -42,31 +42,41 @@
         <div class="col-span-3 grid min-h-full grid-cols-3 gap-4">
             @foreach (var deal in Model.Deals)
             {
-                <a asp-controller="Deals" asp-action="Details" asp-route-id="@deal.Id" class="group flex h-full w-full cursor-pointer flex-col rounded-md bg-white outline-brand/60 transition-colors duration-500 hover:outline">
+                <a asp-controller="Deals" asp-action="Details" asp-route-id="@deal.Id" class="group flex h-fit w-full cursor-pointer flex-col rounded-md bg-white shadow-sm outline-brand/60 transition-colors duration-500 hover:outline">
                     <div class="aspect-video w-full overflow-hidden rounded-t-md">
                         <img src="@(deal.ImageUrl)" alt="@(deal.ImageUrl)" class="aspect-video w-full rounded-t-md object-cover transition-all duration-500 group-hover:scale-110 group-hover:rounded-t-md" />
                     </div>
                     <div class="flex flex-col justify-between gap-1.5 px-4 py-1.5">
                         <div class="flex items-center gap-2">
-                            <span class="rounded-sm bg-brand/15 px-1.5 py-0.5 font-semibold text-[10px] text-brand uppercase">@deal.Category?.Name</span>
+                            <span class="rounded-sm border border-brand/85 bg-brand/15 px-1.5 py-0.5 font-semibold text-[10px] text-brand uppercase">@deal.Category?.Name</span>
                             <p class="text-[10px] text-ink-5">• @(deal.Merchant?.Name ?? "Inconnu")</p>
                         </div>
                         <div class="flex flex-col gap-2 font-sans">
-                            <h4 class="line-clamp-1 text-base leading-tight font-semibold text-ink-2 decoration-brand/80 underline-offset-2 transition-all duration-500 group-hover:text-brand group-hover:underline">@deal.Title</h4>
+                            <h4 class="line-clamp-1 text-base leading-tight font-semibold text-ink-2 transition-all duration-500 group-hover:text-brand">@deal.Title</h4>
                             <p class="line-clamp-2 text-xs leading-tight text-ink-4">@deal.Description</p>
                         </div>
-                        <div class="mt-2 flex items-center gap-2 rounded-md">
-                            <h3 class="fle text-xl leading-none font-semibold tracking-tighter text-brand">@deal.FinalPrice FCFA</h3>
-                            <span class="decoration-red text-xs leading-none tracking-tighter text-gray-400 line-through">@deal.OriginalPrice FCFA</span>
+                        <div class="mt-2 flex items-center gap-3 rounded-md">
+                            <h3 class="fle flex items-center gap-1 text-xl leading-none font-semibold tracking-tight text-brand">
+                                @deal.FinalPrice
+                                <div class="border-dashed-blue-400 rounded-sm bg-blue-200 px-1 py-0.5 font-semibold text-[10px] text-blue-500 uppercase">fcfa</div>
+                            </h3>
+                            <span class="decoration-red text-sm leading-none tracking-tighter text-gray-400 line-through">@deal.OriginalPrice</span>
                         </div>
-                        <div class="flex w-full flex-col gap-2">
-                            <div class="min-h-0.5 min-w-full bg-gray-300"></div>
-                            <div class="flex w-full items-center justify-between bg-blue-300">
+                        <div class="flex w-full flex-col gap-1">
+                            <div class="h-[2px] min-w-full border-t border-gray-200"></div>
+                            <div class="flex w-full items-center justify-between">
                                 <div class="flex w-1/3 items-center gap-1">
                                     <div class="flex h-6 w-6 items-center justify-center rounded-full border border-gray-300 bg-gray-200 font-medium text-[10px] text-gray-400 uppercase">
                                         @deal.User?.FirstName.Substring(0, 1)
                                     </div>
-                                    <p class="font-medium text-gray-400 text-[10px]">@deal.User?.FirstName</p>
+                                    <p class="font-medium text-gray-400 text-[10px]">@deal.User?.FirstName .@deal.User?.LastName.Substring(0, 1)</p>
+                                </div>
+                                <div onclick="event.preventDefault(); event.stopPropagation();" class="relative z-30 gap-3 text-ink-5">
+                                    <button class="flex items-center justify-center gap-0.5 text-sm">
+                                        <iconify-icon icon="solar:fire-linear" class="text-lg text-ink-5">
+                                        </iconify-icon>
+                                        @(deal.VoteScore ?? 0)
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -74,7 +84,72 @@
                 </a>
             }
         </div>
-        <div class="col-span-1 grid h-full min-h-full grid-cols-3 bg-brand/10 text-stone-700">Misere</div>
+        <div class="col-span-1 min-h-full">
+            <div class="col-span-1 min-h-full">
+                <div class="sticky top-28 rounded-md bg-ink px-3 py-4">
+
+                    <!-- Header -->
+                    <div class="relative mb-3">
+                        <div class="absolute -top-2 right-0 h-10 w-10 rounded-full bg-brand blur-3xl"></div>
+                        <h3 class="font-semibold text-ink-9">Top contributeurs</h3>
+                        <p class="text-[10px] text-gray-500">Classés par votes cumulés</p>
+                    </div>
+                    <div class="mb-3 h-px bg-ink-3"></div>
+
+                    @{
+                        var topContributors = Model.Deals
+                        .Where(d => d.User != null)
+                        .GroupBy(d => d.User.Id)
+                        .Select(g => new
+                        {
+                            User = g.First().User,
+                            TotalVotes = g.Sum(d => d.VoteScore ?? 0),
+                            DealCount = g.Count()
+                        })
+                        .OrderByDescending(x => x.TotalVotes)
+                        .Take(5)
+                        .ToList();
+                    }
+
+                    <div class="flex flex-col gap-1">
+                        @for (int i = 0; i < topContributors.Count; i++)
+                        {
+                            var c = topContributors[i];
+                            <div class="flex items-center gap-2.5 rounded-md p-2 transition-colors hover:bg-ink-2">
+                                <span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full
+                                         @(i == 0 ? "bg-brand text-white" : i == 1 ? "bg-ink-3 text-ink-5" : "bg-ink-2 text-ink-4")
+                                         font-bold text-[10px]">
+                                    @(i + 1)
+                                </span>
+                                <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full
+                                        border border-ink-3 bg-ink-2 text-xs font-bold uppercase
+                                        @(i == 0 ? "border-brand/40 text-brand" : "text-ink-5")">
+                                    @c.User.FirstName.Substring(0, 1)@c.User.LastName.Substring(0, 1)
+                                </div>
+                                <div class="min-w-0 flex-1">
+                                    <p class="truncate text-xs font-semibold text-ink-7">
+                                        @c.User.FirstName <span class="text-gray-400">@c.User.LastName.Substring(0, 1).</span>
+                                    </p>
+                                    <p class="text-[10px] text-gray-400">
+                                        @c.DealCount deal@(c.DealCount > 1 ? "s" : "")
+                                    </p>
+                                </div>
+                                <div class="flex shrink-0 flex-col items-end">
+                                    <div class="flex items-center gap-0.5">
+                                        <iconify-icon icon="solar:fire-linear"
+                                                      class="text-sm @(i == 0 ? "text-brand" : "text-ink-4")"></iconify-icon>
+                                        <span class="font-bold text-[10px] @(i == 0 ? "text-brand" : "text-ink-5")">
+                                            @c.TotalVotes
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                </div>
+            </div>
+        </div>
     </div>
 
 </div>

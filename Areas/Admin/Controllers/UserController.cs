@@ -3,6 +3,7 @@ using DealHub.Models.enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace DealHub.Areas.Admin.Controllers
 {
@@ -25,7 +26,7 @@ namespace DealHub.Areas.Admin.Controllers
         {
             List<ApplicationUser> users = new List<ApplicationUser>();
             
-            foreach (ApplicationUser user in userManager.Users)
+            foreach (ApplicationUser user in userManager.Users.Include(u => u.Deals))
             {
                 user.RoleNames = await userManager.GetRolesAsync(user);
                 users.Add(user);

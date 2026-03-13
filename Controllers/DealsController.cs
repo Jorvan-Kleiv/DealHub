@@ -34,6 +34,7 @@ namespace DealHub.Controllers
                     .Include(d => d.Category)
                     .Include(d => d.Merchant)
                     .Include(d => d.User)
+                    .OrderByDescending(d => d.CreatedAt)
                     .ToListAsync(),
 
                 Categories = await _context.Category.ToListAsync(),
@@ -139,8 +140,14 @@ namespace DealHub.Controllers
             {
                 return NotFound();
             }
+            var request = new DealRequest
+            {
+                Deal = deal,
+                Categories = await _context.Category.ToListAsync(),
+                Merchants = await _context.Merchants.ToListAsync()
+            };
 
-            return View(deal);
+            return View(request);
         }
 
         [HttpPost]

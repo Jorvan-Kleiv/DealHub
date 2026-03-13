@@ -85,8 +85,8 @@
                 {
                     <button id="drop-trigger" onclick="toggleDropdown(event)" class="ml-1 flex items-center gap-2 rounded-full border border-gray-200 p-1 pr-1.5 pl-2 text-stone-800 transition-all hover:bg-background">
                         <span class="hidden items-center gap-1 text-sm font-medium text-mutated capitalize md:flex lg:flex">
-                            <iconify-icon icon="solar:alt-arrow-down-linear" class="h-3 w-3 bg-amber-50 text-ink-4"></iconify-icon>
-                            @User.Identity?.Name.Split("@")[0]
+                            <iconify-icon icon="solar:alt-arrow-down-linear" class="h-3 w-3 text-ink-5"></iconify-icon>
+                            @User.Identity?.Name?.Split("@")[0]
                         </span>
                         <div class="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full border border-brand bg-brand/80 uppercase">
                             @User.Identity?.Name?.Substring(0, 1)
