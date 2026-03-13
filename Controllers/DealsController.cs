@@ -28,13 +28,18 @@ namespace DealHub.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Deal.Include(d => d.Category).Include(d => d.Merchant).Include(d => d.User);
-            var categories = await _context.Category.ToListAsync();
-            var merchants = await _context.Merchants.ToListAsync();
-            var dealDto = new DealDto();
-            dealDto.Deals = await _context.Deal.ToListAsync();
-            dealDto.Categories = categories;
-            dealDto.Merchants = merchants;
+            var dealDto = new DealDto
+            {
+                Deals = await _context.Deal
+                    .Include(d => d.Category)
+                    .Include(d => d.Merchant)
+                    .Include(d => d.User)
+                    .ToListAsync(),
+
+                Categories = await _context.Category.ToListAsync(),
+                Merchants = await _context.Merchants.ToListAsync()
+            };
+
             return View(dealDto);
         }
 
@@ -126,14 +131,15 @@ namespace DealHub.Controllers
                 return NotFound();
             }
 
-            var deal = await _context.Deal.FindAsync(id);
+            var deal = await _context.Deal
+                .Include(d => d.Category)
+                .Include(d => d.Merchant)
+                .FirstOrDefaultAsync(d => d.Id == id);
             if (deal == null)
             {
                 return NotFound();
             }
-            ViewData["CategoryId"] = new SelectList(_context.Set<Category>(), "Id", "Id", deal.CategoryId);
-            ViewData["MerchantId"] = new SelectList(_context.Set<Merchant>(), "Id", "Id", deal.MerchantId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", deal.UserId);
+
             return View(deal);
         }
 
@@ -233,5 +239,5 @@ namespace DealHub.Controllers
             return _context.Deal.Any(e => e.Id == id);
         }
     }
-    
+
 }
