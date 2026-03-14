@@ -56,11 +56,11 @@
                             <p class="line-clamp-2 text-xs leading-tight text-ink-4">@deal.Description</p>
                         </div>
                         <div class="mt-2 flex items-center gap-3 rounded-md">
-                            <h3 class="fle flex items-center gap-1 text-xl leading-none font-semibold tracking-tight text-brand">
-                                @deal.FinalPrice
+                            <h3 class="fle flex items-center gap-1 text-3xl leading-none font-semibold tracking-tight text-brand">
+                                @deal.FinalPrice.ToString("N0")
                                 <div class="border-dashed-blue-400 rounded-sm bg-blue-200 px-1 py-0.5 font-semibold text-[10px] text-blue-500 uppercase">fcfa</div>
                             </h3>
-                            <span class="decoration-red text-sm leading-none tracking-tighter text-gray-400 line-through">@deal.OriginalPrice</span>
+                            <span class="decoration-red text-sm leading-none tracking-tighter text-gray-400 line-through">@deal.OriginalPrice.ToString("N0")</span>
                         </div>
                         <div class="flex w-full flex-col gap-1">
                             <div class="h-[2px] min-w-full border-t border-gray-200"></div>
@@ -117,13 +117,13 @@
                             var c = topContributors[i];
                             <div class="flex items-center gap-2.5 rounded-md p-2 transition-colors hover:bg-ink-2">
                                 <span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full
-                                         @(i == 0 ? "bg-brand text-white" : i == 1 ? "bg-ink-3 text-ink-5" : "bg-ink-2 text-ink-4")
-                                         font-bold text-[10px]">
+                                             @(i == 0 ? "bg-brand text-white" : i == 1 ? "bg-ink-3 text-ink-5" : "bg-ink-2 text-ink-4")
+                                             font-bold text-[10px]">
                                     @(i + 1)
                                 </span>
                                 <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full
-                                        border border-ink-3 bg-ink-2 text-xs font-bold uppercase
-                                        @(i == 0 ? "border-brand/40 text-brand" : "text-ink-5")">
+                                            border border-ink-3 bg-ink-2 text-xs font-bold uppercase
+                                            @(i == 0 ? "border-brand/40 text-brand" : "text-ink-5")">
                                     @c.User.FirstName.Substring(0, 1)@c.User.LastName.Substring(0, 1)
                                 </div>
                                 <div class="min-w-0 flex-1">

@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Deal>
+@{
+    ViewData["Title"] = "Deal's Management";
+}
+<div class="flex flex-col gap-6 overflow-y-auto p-5">
+    <div class="flex items-start justify-between">
+        <div><h1 class="font-syne text-xl font-bold text-ink">Deals</h1><p class="mt-0.5 text-xs text-ink-5">1 847 actifs · 423 expirés</p></div>
+    </div>
+    <div class="grid grid-cols-2 gap-2.5 lg:grid-cols-4">
+        <div class="rounded-card shadow-card border border-ink-7 bg-surface p-3"><p class="mb-1 font-bold tracking-wider text-[10px] text-green-500 uppercase">Actifs</p><p class="font-syne text-xl leading-none font-bold text-green-600">@Model.Where(d => d.Status.ToString() == "ACTIVE").Count()</p></div>
+        <div class="rounded-card shadow-card border border-ink-7 bg-surface p-3"><p class="mb-1 font-bold tracking-wider text-[10px] text-ink-5 uppercase">Expirés</p><p class="font-syne text-xl leading-none font-bold text-ink-4">423</p></div>
+        <div class="rounded-card shadow-card border border-ink-7 bg-surface p-3"><p class="mb-1 font-bold tracking-wider text-[10px] text-red-500 uppercase">Signalés</p><p class="font-syne text-xl leading-none font-bold text-red-500">23</p></div>
+        <div class="rounded-card shadow-card border border-ink-7 bg-surface p-3"><p class="mb-1 font-bold tracking-wider text-[10px] text-brand uppercase">Votes totaux</p><p class="font-syne text-xl leading-none font-bold text-brand">94K</p></div>
+    </div>
+    <div class="rounded-card shadow-card overflow-hidden border border-ink-7 bg-surface">
+        <div class="flex flex-wrap gap-2 border-b border-ink-7 p-3">
+            <div class="rounded-btn flex max-w-xs flex-1 items-center gap-2 border border-ink-7 bg-ink-8 px-3 py-2"><iconify-icon icon="solar:magnifer-linear" class="shrink-0 text-ink-5"></iconify-icon><input type="text" placeholder="Rechercher un deal…" class="w-full bg-transparent text-xs outline-none placeholder:text-ink-5"></div>
+            <select class="rounded-btn cursor-pointer border border-ink-7 bg-ink-9 px-3 py-2 text-xs font-medium outline-none"><option>Tous</option><option>Actifs</option><option>Expirés</option><option>Signalés</option></select>
+            <select class="rounded-btn cursor-pointer border border-ink-7 bg-ink-9 px-3 py-2 text-xs font-medium outline-none"><option>Toutes catégories</option><option>High-tech</option><option>Mode</option><option>Gaming</option></select>
+        </div>
+        <div class="overflow-x-auto">
+            <table class="tbl">
+                <thead><tr><th><input type="checkbox" class="accent-ink"></th><th>Deal</th><th>Auteur</th><th>Prix</th><th>Remise</th><th>Votes</th><th>Catégorie</th><th>Statut</th><th></th></tr></thead>
+                <tbody>
+                    @foreach (var deal in Model)
+                    {
+                        <tr>
+                            <td><input type="checkbox" class="accent-ink"></td>
+                            <td><div><p class="text-sm font-semibold text-ink">@deal.Title</p><p class="text-[10px] text-ink-5">@(deal.Merchant != null ? deal.Merchant.Name : "Unknown") · 2h</p></div></td>
+                            <td>
+                                <div class="flex items-center gap-1.5 uppercase">
+                                    <div class="flex h-6 w-6 items-center justify-center rounded-md bg-linear-to-tr from-emerald-600 to-emerald-400 font-bold text-[8px] text-white">
+                                        @deal.User.FirstName.Substring(0, 1)@deal.User.LastName.Substring(0, 1)
+                                    </div><span class="text-xs">@deal.User.FirstName .@deal.User.LastName.Substring(0, 1)</span>
+                                </div>
+                            </td>
+                            <td class="font-syne text-sm font-bold">@deal.OriginalPrice.ToString("N0")</td>
+                            <td class="text-xs font-bold text-brand">-38%</td>
+                            <td class="font-syne text-sm font-bold">@deal.VoteScore</td>
+                            <td><span class="badge b-orange">@deal.Category?.Name</span></td>
+                            <td><span class="badge b-actif">@deal.Status</span></td>
+                            <td><div class="flex gap-1"><button class="rounded border border-ink-7 px-2 py-1 text-[10px] transition-colors hover:border-ink-5">✏️</button><button class="rounded border border-ink-7 px-2 py-1 text-[10px] text-red-500 transition-colors hover:border-red-200 hover:bg-red-50" onclick="openModal('modal-confirm')">🗑</button></div></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

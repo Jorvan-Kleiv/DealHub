@@ -38,6 +38,19 @@
     --animate-fade-up-modal: fadeUp 220ms cubic-bezier(.16,1,.3,1) both;
 }
 
+
+#drop-trigger {
+    anchor-name: --trigger;
+}
+
+#user-dropdown {
+    position-anchor: --trigger;
+    position: fixed;
+    margin-top: 8px;
+    top: anchor(bottom);
+    right:  anchor(right)
+}
+
 @keyframes fadeUp {
     from {
         opacity: 0;
@@ -139,7 +152,9 @@
     }
 }
 
+/* ── Pages ── */
 .page {
+    display: none;
     flex-direction: column;
 }
 
@@ -147,6 +162,7 @@
         display: flex;
     }
 
+/* ── Tables ── */
 .tbl {
     width: 100%;
     border-collapse: collapse;
@@ -484,6 +500,7 @@
     border-radius: 99px;
 }
 
+/* ── Chart bar hover ── */
 .chart-bar {
     transition: opacity 120ms;
 }
@@ -491,15 +508,3 @@
     .chart-bar:hover {
         opacity: .7;
     }
-
-#drop-trigger {
-    anchor-name: --trigger;
-}
-
-#user-dropdown {
-    position-anchor: --trigger;
-    position: fixed;
-    margin-top: 8px;
-    top: anchor(bottom);
-    right:  anchor(right)
-}

@@ -1,5 +1,4 @@
 ﻿using DealHub.Models;
-using DealHub.Models.enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

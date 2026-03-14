@@ -32,12 +32,12 @@
                 </span>
                 <span class="sb-text">Vue d'ensemble</span>
             </a>
-            <a asp-action="Index" class="nav-item" asp-area="Admin">
+            <a asp-controller="User" asp-action="Index" class="nav-item" asp-area="Admin">
                 <span class="nav-icon"><iconify-icon icon="solar:users-group-rounded-linear"></iconify-icon></span>
                 <span class="sb-text">Utilisateurs</span>
                 <span class="sb-badge ml-auto rounded bg-white/[.07] px-1.5 py-0.5 font-bold text-[9px] text-dark-text">248</span>
             </a>
-            <a asp-action="Index" class="nav-item" data-tip="Deals" asp-controller="Deals" asp-area="Admin">
+            <a asp-action="Index" class="nav-item" data-tip="Deals" asp-controller="Deal" asp-area="Admin">
                 <span class="nav-icon"><iconify-icon icon="solar:tag-linear"></iconify-icon></span>
                 <span class="sb-text">Deals</span>
             </a>
@@ -101,7 +101,6 @@
                 </div>
             </div>
         </header>
-
         @RenderBody()
     </div>
     <div id="modal-invite" class="modal-wrap hidden">
