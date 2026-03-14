@@ -59,7 +59,7 @@ npm --version      # doit afficher 10.x.x ou supérieur
 
 ### 1. Cloner le dépôt
 ```bash
-git clone https://github.com/votre-user/dealhub.git
+git clone https://github.com/Jorvan-Kleiv/DealHub.git
 cd dealhub
 ```
 
@@ -238,7 +238,7 @@ npm run build
 
 ### ❌ Erreur de connexion à la base de données
 
-Vérifiez votre `appsettings.Development.json` :
+Vérifiez votre `appsettings.json` :
 ```bash
 # Tester la connexion LocalDB
 sqllocaldb info MSSQLLocalDB
